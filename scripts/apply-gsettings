@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Applies the GNOME settings (gnome-control-center) and GNOME apps configs that
+# are in 'gsettings.txt'.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+
+if ! [ "$(command -v gsettings)" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+while read -r schema key value; do
+    if ! err="$(gsettings set "${schema}" "${key}" "${value}" 2>&1)"; then
+        printf "%s: %s %s %s\n" "${PROGNAME}" "${schema}" "${key}" "${err}" >&2
+    fi
+done < "./gsettings.txt"
+
+exit 0

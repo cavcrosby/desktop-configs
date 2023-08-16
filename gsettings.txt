@@ -1,0 +1,110 @@
+org.gnome.desktop.background show-desktop-icons true
+org.gnome.desktop.calendar show-weekdate false
+org.gnome.desktop.datetime automatic-timezone true
+org.gnome.desktop.default-applications.terminal exec 'x-terminal-emulator'
+org.gnome.desktop.default-applications.terminal exec-arg '-e'
+org.gnome.desktop.input-sources mru-sources [('xkb', 'us')]
+org.gnome.desktop.input-sources sources [('xkb', 'us')]
+org.gnome.desktop.interface clock-format '24h'
+org.gnome.desktop.interface clock-show-date true
+org.gnome.desktop.interface clock-show-seconds false
+org.gnome.desktop.interface clock-show-weekday true
+org.gnome.desktop.interface color-scheme 'prefer-dark'
+org.gnome.desktop.interface icon-theme 'Papirus'
+org.gnome.desktop.privacy report-technical-problems true
+org.gnome.desktop.wm.keybindings close ['<Alt>F4']
+org.gnome.desktop.wm.keybindings cycle-windows ['<Alt>Escape']
+org.gnome.desktop.wm.keybindings cycle-windows-backward ['<Shift><Alt>Escape']
+org.gnome.desktop.wm.keybindings move-to-monitor-left ['<Super><Shift>Left']
+org.gnome.desktop.wm.keybindings move-to-monitor-right ['<Super><Shift>Right']
+org.gnome.desktop.wm.keybindings panel-run-dialog ['<Alt>F2']
+org.gnome.desktop.wm.keybindings switch-applications ['<Super>Tab', '<Alt>Tab']
+org.gnome.desktop.wm.keybindings switch-applications-backward ['<Shift><Super>Tab', '<Shift><Alt>Tab']
+org.gnome.desktop.wm.keybindings switch-panels ['<Control><Alt>Tab']
+org.gnome.desktop.wm.keybindings switch-panels-backward ['<Shift><Control><Alt>Tab']
+org.gnome.desktop.wm.keybindings toggle-maximized ['<Super>m']
+org.gnome.login-screen allowed-failures 3
+org.gnome.mutter.wayland.keybindings switch-to-session-1 ['<Primary><Alt>F1']
+org.gnome.mutter.wayland.keybindings switch-to-session-10 ['<Primary><Alt>F10']
+org.gnome.mutter.wayland.keybindings switch-to-session-11 ['<Primary><Alt>F11']
+org.gnome.mutter.wayland.keybindings switch-to-session-12 ['<Primary><Alt>F12']
+org.gnome.mutter.wayland.keybindings switch-to-session-2 ['<Primary><Alt>F2']
+org.gnome.mutter.wayland.keybindings switch-to-session-3 ['<Primary><Alt>F3']
+org.gnome.mutter.wayland.keybindings switch-to-session-4 ['<Primary><Alt>F4']
+org.gnome.mutter.wayland.keybindings switch-to-session-5 ['<Primary><Alt>F5']
+org.gnome.mutter.wayland.keybindings switch-to-session-6 ['<Primary><Alt>F6']
+org.gnome.mutter.wayland.keybindings switch-to-session-7 ['<Primary><Alt>F7']
+org.gnome.mutter.wayland.keybindings switch-to-session-8 ['<Primary><Alt>F8']
+org.gnome.mutter.wayland.keybindings switch-to-session-9 ['<Primary><Alt>F9']
+org.gnome.settings-daemon.plugins.color night-light-enabled true
+org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+org.gnome.settings-daemon.plugins.color night-light-schedule-from 19.0
+org.gnome.settings-daemon.plugins.color night-light-schedule-to 7.0
+org.gnome.settings-daemon.plugins.color night-light-temperature uint32 2700
+org.gnome.settings-daemon.plugins.media-keys control-center ['<Primary><Super>s']
+org.gnome.settings-daemon.plugins.media-keys custom-keybindings ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>v'
+org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/codium'
+org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Launch VSCodium'
+org.gnome.settings-daemon.plugins.media-keys email ['<Super>e']
+org.gnome.settings-daemon.plugins.media-keys help ['<Super>F1']
+org.gnome.settings-daemon.plugins.media-keys home ['<Super>f']
+org.gnome.settings-daemon.plugins.media-keys logout ['<Control><Alt>Delete']
+org.gnome.settings-daemon.plugins.media-keys screensaver ['<Super>l']
+org.gnome.settings-daemon.plugins.media-keys terminal ['<Super>t']
+org.gnome.settings-daemon.plugins.media-keys www ['<Super>b']
+org.gnome.shell always-show-log-out true
+org.gnome.shell disabled-extensions ['cosmic-workspaces@system76.com', 'cosmic-dock@system76.com', 'popx11gestures@system76.com']
+org.gnome.shell enabled-extensions ['pop-cosmic@system76.com', 'system76-power@system76.com', 'ubuntu-appindicators@ubuntu.com', 'pop-shell@system76.com', 'ding@rastersoft.com', 'dash-to-dock@micxgx.gmail.com', 'hide_clock@grantmcwilliams.com']
+org.gnome.shell.extensions.dash-to-dock activate-single-window true
+org.gnome.shell.extensions.dash-to-dock animate-show-apps false
+org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
+org.gnome.shell.extensions.dash-to-dock autohide true
+org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
+org.gnome.shell.extensions.dash-to-dock dock-alignment 'CENTER'
+org.gnome.shell.extensions.dash-to-dock dock-fixed false
+org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+org.gnome.shell.extensions.dash-to-dock extend-height false
+org.gnome.shell.extensions.dash-to-dock hot-keys false
+org.gnome.shell.extensions.dash-to-dock icon-size-fixed false
+org.gnome.shell.extensions.dash-to-dock intellihide true
+org.gnome.shell.extensions.dash-to-dock multi-monitor false
+org.gnome.shell.extensions.dash-to-dock preferred-monitor -2
+org.gnome.shell.extensions.dash-to-dock preferred-monitor-by-connector 'primary'
+org.gnome.shell.extensions.dash-to-dock show-favorites true
+org.gnome.shell.extensions.dash-to-dock show-mounts true
+org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted true
+org.gnome.shell.extensions.dash-to-dock show-running true
+org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
+org.gnome.shell.extensions.dash-to-dock show-trash true
+org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
+org.gnome.shell.extensions.ding arrangeorder 'NAME'
+org.gnome.shell.extensions.ding icon-size 'standard'
+org.gnome.shell.extensions.ding show-home false
+org.gnome.shell.extensions.ding show-network-volumes false
+org.gnome.shell.extensions.ding show-trash false
+org.gnome.shell.extensions.ding show-volumes false
+org.gnome.shell.extensions.ding start-corner 'top-left'
+org.gnome.shell.extensions.pop-cosmic clock-alignment 'LEFT'
+org.gnome.shell.extensions.pop-cosmic overlay-key-action 'APPLICATIONS'
+org.gnome.shell.extensions.pop-cosmic show-application-menu false
+org.gnome.shell.extensions.pop-cosmic show-applications-button false
+org.gnome.shell.extensions.pop-cosmic show-workspaces-button false
+org.gnome.shell.extensions.pop-shell activate-launcher ['<Super>slash']
+org.gnome.shell.extensions.pop-shell focus-left ['<Super>Left', '<Super>KP_Left', '<Super>h']
+org.gnome.shell.extensions.pop-shell focus-right ['<Super>Right', '<Super>KP_Right', '<Super>l']
+org.gnome.shell.extensions.pop-shell pop-monitor-left ['<Super><Shift>Left', '<Super><Shift>KP_Left', '<Super><Shift>h']
+org.gnome.shell.extensions.pop-shell pop-monitor-right ['<Super><Shift>Right', '<Super><Shift>KP_Right', '<Super><Shift>l']
+org.gnome.shell.keybindings screenshot ['<Shift>Print']
+org.gnome.shell.keybindings screenshot-window ['<Alt>Print']
+org.gnome.shell.keybindings show-screenshot-ui ['Print']
+org.gnome.shell.keybindings toggle-application-view ['<Super>a']
+org.gnome.shell.keybindings toggle-message-tray ['<Super>n']
+org.gnome.shell.keybindings toggle-overview ['<Super>d']
+org.gnome.shell.window-switcher current-workspace-only true
+org.gnome.system.location enabled false
+org.gtk.Settings.FileChooser clock-format '24h'
+org.gtk.Settings.FileChooser date-format 'regular'
+org.gtk.gtk4.Settings.FileChooser clock-format '24h'
+org.gtk.gtk4.Settings.FileChooser date-format 'regular'

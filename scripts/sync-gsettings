@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Syncs the current GNOME settings (gnome-control-center) and GNOME apps configs
+# with what's in 'gsettings.txt'.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+
+if ! [ "$(command -v gsettings)" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+tmpfile_path="$(mktemp)"
+while read -r schema key value; do
+    if ! current_value="$(gsettings get "${schema}" "${key}" 2>&1)"; then
+        printf "%s: %s\n" "${PROGNAME}" "${current_value}" >&2
+    elif [ "${current_value}" != "${value}" ]; then
+        value="${current_value}"
+    fi
+
+    printf "%s %s %s\n" "${schema}" "${key}" "${value}" >> "${tmpfile_path}"
+done < "./gsettings.txt"
+
+mv "${tmpfile_path}" "./gsettings.txt"
+
+exit 0

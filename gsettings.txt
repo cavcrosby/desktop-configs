@@ -13,8 +13,8 @@ org.gnome.desktop.interface color-scheme 'prefer-dark'
 org.gnome.desktop.interface icon-theme 'Papirus'
 org.gnome.desktop.privacy report-technical-problems true
 org.gnome.desktop.wm.keybindings close ['<Alt>F4']
-org.gnome.desktop.wm.keybindings cycle-group ['<Alt>Escape']
-org.gnome.desktop.wm.keybindings cycle-group-backward ['<Shift><Alt>Escape']
+org.gnome.desktop.wm.keybindings cycle-group ['<Alt>Above_Tab']
+org.gnome.desktop.wm.keybindings cycle-group-backward ['<Shift><Alt>Above_Tab']
 org.gnome.desktop.wm.keybindings cycle-windows ['<Alt>F6']
 org.gnome.desktop.wm.keybindings cycle-windows-backward ['<Shift><Alt>F6']
 org.gnome.desktop.wm.keybindings move-to-monitor-left ['<Super><Shift>Left']

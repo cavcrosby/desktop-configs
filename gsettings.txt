@@ -95,7 +95,7 @@ org.gnome.shell.extensions.pop-cosmic show-applications-button false
 org.gnome.shell.extensions.pop-cosmic show-workspaces-button false
 org.gnome.shell.extensions.pop-shell activate-launcher ['<Super>slash']
 org.gnome.shell.extensions.pop-shell focus-left ['<Super>Left', '<Super>KP_Left', '<Super>h']
-org.gnome.shell.extensions.pop-shell focus-right ['<Super>Right', '<Super>KP_Right', '<Super>l']
+org.gnome.shell.extensions.pop-shell focus-right ['<Super>Right', '<Super>KP_Right']
 org.gnome.shell.extensions.pop-shell pop-monitor-left ['<Super><Shift>Left', '<Super><Shift>KP_Left', '<Super><Shift>h']
 org.gnome.shell.extensions.pop-shell pop-monitor-right ['<Super><Shift>Right', '<Super><Shift>KP_Right', '<Super><Shift>l']
 org.gnome.shell.keybindings screenshot ['<Shift>Print']

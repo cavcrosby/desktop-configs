@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Adds apt data sources that are formatted according to 'sources.list(5)'.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+readonly ROOT_UID=0
+
+if [ "$(id --user)" != "${ROOT_UID}" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "you must run this as root" >&2
+    exit 1
+fi
+
+install --mode 644 "./apt/docker.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/hashicorp.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/helm.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/papirus-icons.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/virtualbox.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/vscodium.sources" "/etc/apt/sources.list.d"
+
+apt-get update
+
+exit 0

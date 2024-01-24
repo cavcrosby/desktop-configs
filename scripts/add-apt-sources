@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Adds apt data sources that are formatted according to 'sources.list(5)'.
+# Adds apt data sources and preferences fragment files that are formatted
+# according to sources.list(5) and apt_preferences(5) respectively.
 
 set -eo pipefail
 
@@ -20,6 +21,8 @@ install --mode 644 "./apt/helm.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/papirus-icons.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/virtualbox.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/vscodium.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/mozilla.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
 
 apt-get update
 

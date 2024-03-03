@@ -16,6 +16,7 @@ INSTALL_GDM_CONFIGS = install-gdm-configs
 INSTALL_VSCODE_WORKSPACES = install-vscode-workspaces
 SET_NAUTILUS_ICONS = set-nautilus-icons
 INSTALL_NAUTILUS_BOOKMARKS = install-nautilus-bookmarks
+INSTALL_FIREFOX_CONFIGS = install-firefox-configs
 
 # executables
 ENVSUBST = envsubst
@@ -34,6 +35,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}       - install the Visual Studio Code workspaces'
 >	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}              - set icons for files displayed by the Nautilus file manager'
 >	@printf '%s\n' '  ${INSTALL_NAUTILUS_BOOKMARKS}      - install bookmarks for the Nautilus file manager'
+>	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}         - install the Firefox web browser configurations'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:
@@ -72,6 +74,32 @@ ${INSTALL_NAUTILUS_BOOKMARKS}: local_config_files_vars = \
 								$${HOME}
 ${INSTALL_NAUTILUS_BOOKMARKS}: ./nautilus/bookmarks
 >	install --mode 664 "$^" "$${HOME}/.config/gtk-3.0/bookmarks"
+
+.PHONY: ${INSTALL_FIREFOX_CONFIGS}
+${INSTALL_FIREFOX_CONFIGS}:
+>	install \
+		-D \
+		--mode 644 \
+		"./firefox/1m544c8z.default-release/user.js" \
+		"${HOME}/.mozilla/firefox/1m544c8z.default-release/user.js"
+
+>	install \
+		-D \
+		--mode 644 \
+		"./firefox/owjmdw8l.default/.gitignore" \
+		"${HOME}/.mozilla/firefox/owjmdw8l.default/.gitignore"
+
+>	install \
+		-D \
+		--mode 664 \
+		"./firefox/installs.ini" \
+		"${HOME}/.mozilla/firefox/installs.ini"
+
+>	install \
+		-D \
+		--mode 664 \
+		"./firefox/profiles.ini" \
+		"${HOME}/.mozilla/firefox/profiles.ini"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

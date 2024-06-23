@@ -14,11 +14,11 @@ ADD_APT_SOURCES = add-apt-sources
 .PHONY: ${HELP}
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
->	@echo 'Common make targets:'
->	@echo '  ${APPLY_GSETTINGS}     - apply the GNOME settings found in gsettings.txt'
->	@echo '  ${SYNC_GSETTINGS}      - sync the current desktop GNOME settings with what'\''s'
->	@echo '                        in gsettings.txt'
->	@echo '  ${ADD_APT_SOURCES}     - add apt data sources formatted according to sources.list(5)'
+>	@printf '%s\n' 'Common make targets:'
+>	@printf '%s\n' '  ${APPLY_GSETTINGS}     - apply the GNOME settings found in gsettings.txt'
+>	@printf '%s\n' '  ${SYNC_GSETTINGS}      - sync the current desktop GNOME settings with what'\''s'
+>	@printf '%s\n' '                        in gsettings.txt'
+>	@printf '%s\n' '  ${ADD_APT_SOURCES}     - add apt data sources formatted according to sources.list(5)'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:

@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Prints GNOME keybindings that use the same keys.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+SCHEMAS=(
+    "org.gnome.desktop.wm.keybindings"
+    "org.gnome.metacity.keybindings"
+    "org.gnome.mutter.keybindings"
+    "org.gnome.mutter.wayland.keybindings"
+    "org.gnome.shell.keybindings"
+)
+
+if ! [ "$(command -v gsettings)" ]; then
+    printf '%s: %s\n' "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+temp_file_path="$(mktemp)"
+for schema in "${SCHEMAS[@]}"; do
+    while read -r key; do
+        value="$(gsettings get "${schema}" "${key}")"
+        if [ "${value}" != '@as []' ]; then
+            printf \
+                '%s %s %s\n' \
+                "${schema}" \
+                "${key}" \
+                "${value}" \
+                >> "${temp_file_path}"
+        fi
+    done < <(gsettings list-keys "${schema}")
+done
+
+sort --key 3 < "${temp_file_path}" | uniq -D --skip-fields 2
+
+exit 0

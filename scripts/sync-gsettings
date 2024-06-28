@@ -14,7 +14,7 @@ if ! [ "$(command -v gsettings)" ]; then
     exit 1
 fi
 
-tmpfile_path="$(mktemp)"
+temp_file_path="$(mktemp)"
 while read -r schema key value; do
     if ! current_value="$(gsettings get "${schema}" "${key}" 2>&1)"; then
         printf "%s: %s\n" "${PROGNAME}" "${current_value}" >&2
@@ -22,9 +22,9 @@ while read -r schema key value; do
         value="${current_value}"
     fi
 
-    printf "%s %s %s\n" "${schema}" "${key}" "${value}" >> "${tmpfile_path}"
+    printf "%s %s %s\n" "${schema}" "${key}" "${value}" >> "${temp_file_path}"
 done < "./gsettings.txt"
 
-mv "${tmpfile_path}" "./gsettings.txt"
+mv "${temp_file_path}" "./gsettings.txt"
 
 exit 0

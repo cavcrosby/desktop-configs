@@ -3,3 +3,4 @@ MAILTO = cavcrosby@gmail.com
 10 * * * *  rclone copy "crosbyco3:/Computing Books And Material" "${HOME}/Documents/books"
 15 * * * *  rclone copy "crosbyco3:/Music/Amazon Music" "${HOME}/Music/amazon_music"
 15 * * * *  rclone copy "crosbyco3:/Music/Google Music" "${HOME}/Music/google_music"
+20 * * * *  rclone copy "crosbyco3:/Carrier Snippets" "${HOME}/git/playground/carrier_snips"

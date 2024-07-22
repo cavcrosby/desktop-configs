@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Installs the GNOME Display Manager's (gdm) configs.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+readonly ROOT_UID=0
+
+if [ "$(id --user)" != "${ROOT_UID}" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "you must run this as root" >&2
+    exit 1
+fi
+
+install --mode 644 "./gdm/profile" "/etc/dconf/profile/gdm"
+install \
+    -D \
+    --mode 644 \
+    --target-directory "/etc/dconf/db/gdm.d" \
+    "./gdm/00-desktop-configs"
+
+dconf update
+
+exit 0

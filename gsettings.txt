@@ -43,8 +43,8 @@ org.gnome.mutter.wayland.keybindings switch-to-session-8 ['<Primary><Alt>F8']
 org.gnome.mutter.wayland.keybindings switch-to-session-9 ['<Primary><Alt>F9']
 org.gnome.settings-daemon.plugins.color night-light-enabled true
 org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
-org.gnome.settings-daemon.plugins.color night-light-schedule-from 19.0
-org.gnome.settings-daemon.plugins.color night-light-schedule-to 7.0
+org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
+org.gnome.settings-daemon.plugins.color night-light-schedule-to 6.0
 org.gnome.settings-daemon.plugins.color night-light-temperature uint32 2700
 org.gnome.settings-daemon.plugins.media-keys control-center ['<Primary><Super>s']
 org.gnome.settings-daemon.plugins.media-keys custom-keybindings ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']

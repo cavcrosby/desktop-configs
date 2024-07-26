@@ -22,6 +22,7 @@ install --mode 644 "./apt/papirus-icons.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/vscodium.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/mozilla.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
+install --mode 644 "./apt/fastfetch.sources" "/etc/apt/sources.list.d"
 
 apt-get update
 

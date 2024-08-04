@@ -13,18 +13,20 @@ ADD_APT_SOURCES = add-apt-sources
 PRINT_DUPKEYBINDS = print-dupkeybinds
 INSTALL_CRONTAB = install-crontab
 INSTALL_GDM_CONFIGS = install-gdm-configs
+INSTALL_VSCODE_WORKSPACES = install-vscode-workspaces
 
 .PHONY: ${HELP}
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
->	@printf '%s\n' '  ${APPLY_GSETTINGS}         - apply the GNOME settings found in gsettings.txt'
->	@printf '%s\n' '  ${SYNC_GSETTINGS}          - sync the current desktop GNOME settings with what'\''s'
->	@printf '%s\n' '                            in gsettings.txt'
->	@printf '%s\n' '  ${ADD_APT_SOURCES}         - add apt data sources formatted according to sources.list(5)'
->	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}       - print GNOME keybinding settings that use the same value'
->	@printf '%s\n' '  ${INSTALL_CRONTAB}         - install the crontab(5) tables from crontab.txt'
->	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}     - install the GNOME Display Manager configurations'
+>	@printf '%s\n' '  ${APPLY_GSETTINGS}               - apply the GNOME settings found in gsettings.txt'
+>	@printf '%s\n' '  ${SYNC_GSETTINGS}                - sync the current desktop GNOME settings with what'\''s'
+>	@printf '%s\n' '                                  in gsettings.txt'
+>	@printf '%s\n' '  ${ADD_APT_SOURCES}               - add apt data sources formatted according to sources.list(5)'
+>	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}             - print GNOME keybinding settings that use the same value'
+>	@printf '%s\n' '  ${INSTALL_CRONTAB}               - install the crontab(5) tables from crontab.txt'
+>	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}           - install the GNOME Display Manager configurations'
+>	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}     - install the Visual Studio Code workspaces'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:
@@ -49,3 +51,7 @@ ${INSTALL_CRONTAB}:
 .PHONY: ${INSTALL_GDM_CONFIGS}
 ${INSTALL_GDM_CONFIGS}:
 >	./scripts/install-gdm-configs
+
+.PHONY: ${INSTALL_VSCODE_WORKSPACES}
+${INSTALL_VSCODE_WORKSPACES}:
+>	install --mode 644 "./vscode/personal.code-workspace" ".."

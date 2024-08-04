@@ -1,0 +1,22 @@
+{
+    "folders": [
+        {
+            "path": "desktop-configs"
+        },
+        {
+            "path": "dotfiles"
+        },
+        {
+            "path": "general-purpose-scripts"
+        },
+        {
+            "path": "homelab-cm"
+        },
+        {
+            "path": "playground"
+        },
+        {
+            "path": "vscode-settings"
+        }
+    ]
+}

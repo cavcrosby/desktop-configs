@@ -14,6 +14,7 @@ PRINT_DUPKEYBINDS = print-dupkeybinds
 INSTALL_CRONTAB = install-crontab
 INSTALL_GDM_CONFIGS = install-gdm-configs
 INSTALL_VSCODE_WORKSPACES = install-vscode-workspaces
+SET_NAUTILUS_ICONS = set-nautilus-icons
 
 .PHONY: ${HELP}
 ${HELP}:
@@ -27,6 +28,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_CRONTAB}               - install the crontab(5) tables from crontab.txt'
 >	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}           - install the GNOME Display Manager configurations'
 >	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}     - install the Visual Studio Code workspaces'
+>	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}            - set icons for files displayed by the Nautilus file manager'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:
@@ -55,3 +57,7 @@ ${INSTALL_GDM_CONFIGS}:
 .PHONY: ${INSTALL_VSCODE_WORKSPACES}
 ${INSTALL_VSCODE_WORKSPACES}:
 >	install --mode 644 "./vscode/personal.code-workspace" ".."
+
+.PHONY: ${SET_NAUTILUS_ICONS}
+${SET_NAUTILUS_ICONS}:
+>	./scripts/set-nautilus-icons

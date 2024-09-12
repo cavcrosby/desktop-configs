@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Sets icons for files displayed by the Nautilus file manager.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+
+set_location_icon() {
+    local location_path="$1"
+    local icon_path="$2"
+    if ! gio set \
+        "${location_path}" \
+        "metadata::custom-icon" \
+        "file://${icon_path}" 2> "/dev/null"; then
+            printf \
+                '%s: %s\n' \
+                "${PROGNAME}" \
+                "${location_path} no such file or directory" \
+                >&2
+    fi
+}
+
+if ! [ "$(command -v gsettings)" ]; then
+    printf '%s: %s\n' "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+icon_theme="$(gsettings get "org.gnome.desktop.interface" "icon-theme" | tr --delete "'")"
+if ! printf '%s' "${icon_theme}" | grep --quiet "Papirus"; then
+    printf \
+        '%s: %s\n' \
+        "${PROGNAME}" \
+        "expected a Papirus icon theme to be set" \
+        >&2
+
+    exit 1
+fi
+
+set_location_icon \
+    "${HOME}/git" \
+    "/usr/share/icons/${icon_theme}/64x64/places/folder-git.svg"
+
+set_location_icon \
+    "${HOME}/src" \
+    "/usr/share/icons/${icon_theme}/64x64/places/folder-code.svg"
+
+set_location_icon \
+    "${HOME}/Steam" \
+    "/usr/share/icons/${icon_theme}/64x64/places/folder-steam.svg"
+
+exit 0

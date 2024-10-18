@@ -25,12 +25,21 @@ for schema in "${SCHEMAS[@]}"; do
     while read -r key; do
         value="$(gsettings get "${schema}" "${key}")"
         if [ "${value}" != '@as []' ]; then
-            printf \
-                '%s %s %s\n' \
-                "${schema}" \
-                "${key}" \
-                "${value}" \
-                >> "${temp_file_path}"
+            # parse keybindings to loop over by mangling the following:
+            #   - ['
+            #   - ', '
+            #   - ']
+            for keybinding in $(\
+                printf '%s' "${value}" \
+                | sed 's/\['\''//; s/'\'', '\''/ /g; s/'\''\]//'\
+            ); do
+                printf \
+                    '%s %s %s\n' \
+                    "${schema}" \
+                    "${key}" \
+                    "['${keybinding}']" \
+                    >> "${temp_file_path}"
+            done
         fi
     done < <(gsettings list-keys "${schema}")
 done

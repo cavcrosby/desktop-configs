@@ -9,15 +9,23 @@ set -eo pipefail
 PROGNAME="$(basename "$0")"
 readonly PROGNAME
 
+apply_gsettings() {
+    local gsettings_file_path="$1"
+    while read -r schema key value; do
+        if ! err="$(gsettings set "${schema}" "${key}" "${value}" 2>&1)"; then
+            printf "%s: %s %s %s\n" "${PROGNAME}" "${schema}" "${key}" "${err}" >&2
+        fi
+    done < "${gsettings_file_path}"
+}
+
 if ! [ "$(command -v gsettings)" ]; then
     printf "%s: %s\n" "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
     exit 1
 fi
 
-while read -r schema key value; do
-    if ! err="$(gsettings set "${schema}" "${key}" "${value}" 2>&1)"; then
-        printf "%s: %s %s %s\n" "${PROGNAME}" "${schema}" "${key}" "${err}" >&2
-    fi
-done < "./gsettings.txt"
+apply_gsettings "./gsettings.txt"
+if [ -r "./gsettings.txt.local" ]; then
+    apply_gsettings "./gsettings.txt.local"
+fi
 
 exit 0

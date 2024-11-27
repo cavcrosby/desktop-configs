@@ -2,6 +2,7 @@ Types: deb
 URIs: https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs
 Suites: vscodium
 Components: main
+Architectures-Remove: i386
 Signed-By:
  -----BEGIN PGP PUBLIC KEY BLOCK-----
  .

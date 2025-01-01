@@ -17,6 +17,7 @@ INSTALL_VSCODE_WORKSPACES = install-vscode-workspaces
 SET_NAUTILUS_ICONS = set-nautilus-icons
 INSTALL_NAUTILUS_BOOKMARKS = install-nautilus-bookmarks
 INSTALL_FIREFOX_CONFIGS = install-firefox-configs
+INSTALL_PAM_ENV_FILE = install-pam-env-file
 
 # executables
 ENVSUBST = envsubst
@@ -36,6 +37,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}              - set icons for files displayed by the Nautilus file manager'
 >	@printf '%s\n' '  ${INSTALL_NAUTILUS_BOOKMARKS}      - install bookmarks for the Nautilus file manager'
 >	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}         - install the Firefox web browser configurations'
+>	@printf '%s\n' '  ${INSTALL_PAM_ENV_FILE}            - install the pam_env.conf(5) environment variables file'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:
@@ -100,6 +102,10 @@ ${INSTALL_FIREFOX_CONFIGS}:
 		--mode 664 \
 		"./firefox/profiles.ini" \
 		"${HOME}/.mozilla/firefox/profiles.ini"
+
+.PHONY: ${INSTALL_PAM_ENV_FILE}
+${INSTALL_PAM_ENV_FILE}:
+>	./scripts/install-pam-env-file
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

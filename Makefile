@@ -49,7 +49,7 @@ ${SYNC_GSETTINGS}:
 
 .PHONY: ${ADD_APT_SOURCES}
 ${ADD_APT_SOURCES}:
->	./scripts/add-apt-sources
+>	sudo ./scripts/add-apt-sources
 
 .PHONY: ${PRINT_DUPKEYBINDS}
 ${PRINT_DUPKEYBINDS}:
@@ -61,7 +61,7 @@ ${INSTALL_CRONTAB}:
 
 .PHONY: ${INSTALL_GDM_CONFIGS}
 ${INSTALL_GDM_CONFIGS}:
->	./scripts/install-gdm-configs
+>	sudo ./scripts/install-gdm-configs
 
 .PHONY: ${INSTALL_VSCODE_WORKSPACES}
 ${INSTALL_VSCODE_WORKSPACES}:
@@ -105,7 +105,7 @@ ${INSTALL_FIREFOX_CONFIGS}:
 
 .PHONY: ${INSTALL_PAM_ENV_FILE}
 ${INSTALL_PAM_ENV_FILE}:
->	./scripts/install-pam-env-file
+>	sudo install --mode 644 "./environment" "/etc/environment"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

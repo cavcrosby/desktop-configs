@@ -13,6 +13,9 @@
             "path": "homelab-cm"
         },
         {
+            "path": "kubectl-pkg-repo"
+        },
+        {
             "path": "playground"
         },
         {

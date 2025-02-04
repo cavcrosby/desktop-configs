@@ -18,6 +18,7 @@ SET_NAUTILUS_ICONS = set-nautilus-icons
 INSTALL_NAUTILUS_BOOKMARKS = install-nautilus-bookmarks
 INSTALL_FIREFOX_CONFIGS = install-firefox-configs
 INSTALL_PAM_ENV_FILE = install-pam-env-file
+INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 
 # executables
 ENVSUBST = envsubst
@@ -26,18 +27,19 @@ ENVSUBST = envsubst
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
->	@printf '%s\n' '  ${APPLY_GSETTINGS}                 - apply the GNOME settings found in gsettings.txt'
->	@printf '%s\n' '  ${SYNC_GSETTINGS}                  - sync the current desktop GNOME settings with what'\''s'
->	@printf '%s\n' '                                    in gsettings.txt'
->	@printf '%s\n' '  ${ADD_APT_SOURCES}                 - add apt data sources formatted according to sources.list(5)'
->	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}               - print GNOME keybinding settings that use the same value'
->	@printf '%s\n' '  ${INSTALL_CRONTAB}                 - install the crontab(5) tables from crontab.txt'
->	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}             - install the GNOME Display Manager configurations'
->	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}       - install the Visual Studio Code workspaces'
->	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}              - set icons for files displayed by the Nautilus file manager'
->	@printf '%s\n' '  ${INSTALL_NAUTILUS_BOOKMARKS}      - install bookmarks for the Nautilus file manager'
->	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}         - install the Firefox web browser configurations'
->	@printf '%s\n' '  ${INSTALL_PAM_ENV_FILE}            - install the pam_env.conf(5) environment variables file'
+>	@printf '%s\n' '  ${APPLY_GSETTINGS}                    - apply the GNOME settings found in gsettings.txt'
+>	@printf '%s\n' '  ${SYNC_GSETTINGS}                     - sync the current desktop GNOME settings with what'\''s'
+>	@printf '%s\n' '                                       in gsettings.txt'
+>	@printf '%s\n' '  ${ADD_APT_SOURCES}                    - add apt data sources formatted according to sources.list(5)'
+>	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}                  - print GNOME keybinding settings that use the same value'
+>	@printf '%s\n' '  ${INSTALL_CRONTAB}                    - install the crontab(5) tables from crontab.txt'
+>	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}                - install the GNOME Display Manager configurations'
+>	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}          - install the Visual Studio Code workspaces'
+>	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}                 - set icons for files displayed by the Nautilus file manager'
+>	@printf '%s\n' '  ${INSTALL_NAUTILUS_BOOKMARKS}         - install bookmarks for the Nautilus file manager'
+>	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}            - install the Firefox web browser configurations'
+>	@printf '%s\n' '  ${INSTALL_PAM_ENV_FILE}               - install the pam_env.conf(5) environment variables file'
+>	@printf '%s\n' '  ${INSTALL_SSHD_PUBKEY_AUTH_CONF}      - install the sshd_config(5) sshd_pubkey_auth.conf file'
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:
@@ -106,6 +108,11 @@ ${INSTALL_FIREFOX_CONFIGS}:
 .PHONY: ${INSTALL_PAM_ENV_FILE}
 ${INSTALL_PAM_ENV_FILE}:
 >	sudo install --mode 644 "./environment" "/etc/environment"
+
+.PHONY: ${INSTALL_SSHD_PUBKEY_AUTH_CONF}
+${INSTALL_SSHD_PUBKEY_AUTH_CONF}:
+>	sudo install --mode 644 "./sshd_pubkey_auth.conf" "/etc/ssh/sshd_config.d"
+>	sudo systemctl restart "sshd.service"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

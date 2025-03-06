@@ -21,6 +21,14 @@ install \
     --target-directory "/etc/dconf/db/gdm.d" \
     "./gdm/00-desktop-configs"
 
+if [ -r "./gdm/00-desktop-configs.local" ]; then
+    install \
+        -D \
+        --mode 644 \
+        --target-directory "/etc/dconf/db/gdm.d" \
+        "./gdm/00-desktop-configs.local"
+fi
+
 dconf update
 
 exit 0

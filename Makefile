@@ -80,30 +80,13 @@ ${INSTALL_NAUTILUS_BOOKMARKS}: ./nautilus/bookmarks
 >	install --mode 664 "$^" "$${HOME}/.config/gtk-3.0/bookmarks"
 
 .PHONY: ${INSTALL_FIREFOX_CONFIGS}
-${INSTALL_FIREFOX_CONFIGS}:
->	install \
-		-D \
-		--mode 644 \
-		"./firefox/1m544c8z.default-release/user.js" \
-		"${HOME}/.mozilla/firefox/1m544c8z.default-release/user.js"
-
->	install \
-		-D \
-		--mode 644 \
-		"./firefox/owjmdw8l.default/.gitignore" \
-		"${HOME}/.mozilla/firefox/owjmdw8l.default/.gitignore"
-
->	install \
-		-D \
-		--mode 664 \
-		"./firefox/installs.ini" \
-		"${HOME}/.mozilla/firefox/installs.ini"
-
->	install \
-		-D \
-		--mode 664 \
-		"./firefox/profiles.ini" \
-		"${HOME}/.mozilla/firefox/profiles.ini"
+${INSTALL_FIREFOX_CONFIGS}: local_config_files_vars = \
+								$${HTTP_PROXY_HOSTNAME}\
+								$${HTTP_PROXY_PORT}
+${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_HOSTNAME = proxy.homelab.cavcrosby.net
+${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_PORT = 39600
+${INSTALL_FIREFOX_CONFIGS}: ./firefox/1m544c8z.default-release/user.js
+>	./scripts/install-firefox-configs
 
 .PHONY: ${INSTALL_PAM_ENV_FILE}
 ${INSTALL_PAM_ENV_FILE}:

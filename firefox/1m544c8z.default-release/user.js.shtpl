@@ -1,0 +1,5 @@
+user_pref('network.proxy.http', '${HTTP_PROXY_HOSTNAME}');
+user_pref('network.proxy.http_port', ${HTTP_PROXY_PORT});
+user_pref('network.proxy.share_proxy_settings', true);
+user_pref('network.proxy.type', 1);
+user_pref('services.sync.prefs.sync.browser.tabs.insertRelatedAfterCurrent', true);

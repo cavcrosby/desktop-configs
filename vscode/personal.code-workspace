@@ -1,29 +1,29 @@
 {
     "folders": [
         {
-            "path": "desktop-configs"
+            "path": "./desktop-configs"
         },
         {
-            "path": "dotfiles"
+            "path": "./dotfiles"
         },
         {
-            "path": "general-purpose-scripts"
+            "path": "./general-purpose-scripts"
         },
         {
-            "path": "homelab-cm"
+            "path": "./homelab-cm"
         },
         {
             "name": "homelab-mitmproxy",
-            "path": "homelab-cm/mitmproxy"
+            "path": "./homelab-cm/mitmproxy"
         },
         {
-            "path": "kubectl-pkg-repo"
+            "path": "./kubectl-pkg-repo"
         },
         {
-            "path": "playground"
+            "path": "./playground"
         },
         {
-            "path": "vscode-settings"
+            "path": "./vscode-settings"
         }
     ]
 }

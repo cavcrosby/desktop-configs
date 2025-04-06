@@ -13,6 +13,10 @@
             "path": "homelab-cm"
         },
         {
+            "name": "homelab-mitmproxy",
+            "path": "homelab-cm/mitmproxy"
+        },
+        {
             "path": "kubectl-pkg-repo"
         },
         {

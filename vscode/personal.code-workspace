@@ -7,9 +7,6 @@
             "path": "./dotfiles"
         },
         {
-            "path": "./general-purpose-scripts"
-        },
-        {
             "path": "./homelab-cm"
         },
         {

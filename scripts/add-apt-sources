@@ -24,6 +24,9 @@ install --mode 644 "./apt/mozilla.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
 install --mode 644 "./apt/fastfetch.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./apt/kubectl.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/opentofu.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./apt/opentofu.gpg" "/etc/apt/keyrings"
+install --mode 644 "./apt/opentofu-repo.gpg" "/etc/apt/keyrings"
 
 apt-get update
 

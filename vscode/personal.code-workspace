@@ -1,6 +1,9 @@
 {
     "folders": [
         {
+            "path": "./aws-cm"
+        },
+        {
             "path": "./desktop-configs"
         },
         {

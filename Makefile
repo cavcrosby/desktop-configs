@@ -90,7 +90,8 @@ ${INSTALL_FIREFOX_CONFIGS}: ./firefox/1m544c8z.default-release/user.js
 
 .PHONY: ${INSTALL_PAM_ENV_FILE}
 ${INSTALL_PAM_ENV_FILE}:
->	sudo install --mode 644 "./environment" "/etc/environment"
+>	sudo install --mode 644 "./pam_env.conf" "/etc/security/pam_env.conf"
+>	sudo truncate --size 0 "/etc/environment"
 
 .PHONY: ${INSTALL_SSHD_PUBKEY_AUTH_CONF}
 ${INSTALL_SSHD_PUBKEY_AUTH_CONF}:

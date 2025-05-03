@@ -17,7 +17,7 @@ INSTALL_VSCODE_WORKSPACES = install-vscode-workspaces
 SET_NAUTILUS_ICONS = set-nautilus-icons
 INSTALL_NAUTILUS_BOOKMARKS = install-nautilus-bookmarks
 INSTALL_FIREFOX_CONFIGS = install-firefox-configs
-INSTALL_PAM_ENV_FILE = install-pam-env-file
+INSTALL_PAM_ENV_CONF = install-pam-env-file
 INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 
 # executables
@@ -38,7 +38,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}                 - set icons for files displayed by the Nautilus file manager'
 >	@printf '%s\n' '  ${INSTALL_NAUTILUS_BOOKMARKS}         - install bookmarks for the Nautilus file manager'
 >	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}            - install the Firefox web browser configurations'
->	@printf '%s\n' '  ${INSTALL_PAM_ENV_FILE}               - install the pam_env.conf(5) environment variables file'
+>	@printf '%s\n' '  ${INSTALL_PAM_ENV_CONF}               - install the pam_env.conf(5) environment variables file'
 >	@printf '%s\n' '  ${INSTALL_SSHD_PUBKEY_AUTH_CONF}      - install the sshd_config(5) sshd_pubkey_auth.conf file'
 
 .PHONY: ${APPLY_GSETTINGS}
@@ -88,9 +88,10 @@ ${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_PORT = 39600
 ${INSTALL_FIREFOX_CONFIGS}: ./firefox/1m544c8z.default-release/user.js
 >	./scripts/install-firefox-configs
 
-.PHONY: ${INSTALL_PAM_ENV_FILE}
-${INSTALL_PAM_ENV_FILE}:
->	sudo install --mode 644 "./environment" "/etc/environment"
+.PHONY: ${INSTALL_PAM_ENV_CONF}
+${INSTALL_PAM_ENV_CONF}:
+>	sudo install --mode 644 "./pam_env.conf" "/etc/security/pam_env.conf"
+>	sudo truncate --size 0 "/etc/environment"
 
 .PHONY: ${INSTALL_SSHD_PUBKEY_AUTH_CONF}
 ${INSTALL_SSHD_PUBKEY_AUTH_CONF}:

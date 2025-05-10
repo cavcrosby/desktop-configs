@@ -1,4 +1,4 @@
-Types: deb
+Types: deb deb-src
 URIs: https://ppa.launchpadcontent.net/papirus/papirus/ubuntu
 Suites: jammy
 Components: main

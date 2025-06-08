@@ -24,6 +24,9 @@
         },
         {
             "path": "./vscode-settings"
+        },
+        {
+            "path": "./yq-go"
         }
     ],
     "settings": {

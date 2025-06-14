@@ -13,8 +13,8 @@ if ! [ "$(command -v curl)" ]; then
     exit 1
 fi
 
-if ! [ "$(command -v jq)" ]; then
-    printf '%s: %s\n' "${PROGNAME}" "jq cannot be found in the PATH!" >&2
+if ! [ "$(command -v yq)" ]; then
+    printf '%s: %s\n' "${PROGNAME}" "yq cannot be found in the PATH!" >&2
     exit 1
 fi
 
@@ -54,7 +54,7 @@ fi
 
 FIREFOX_POLICIES_FILE_PATH="/usr/lib/firefox/distribution/policies.json"
 if ! [ -r "${FIREFOX_POLICIES_FILE_PATH}" ]; then
-    cat << _EOF_ | sudo tee "${FIREFOX_POLICIES_FILE_PATH}" | jq
+    cat << _EOF_ | sudo tee "${FIREFOX_POLICIES_FILE_PATH}" | yq --prettyPrint --output-format "json"
 {
     "policies": {
         "Certificates": {
@@ -66,20 +66,17 @@ if ! [ -r "${FIREFOX_POLICIES_FILE_PATH}" ]; then
 }
 _EOF_
 elif ! [ "$(\
-    jq \
-        --raw-output \
-        --arg http_proxy_hostname "${HTTP_PROXY_HOSTNAME}" \
-        '.["policies"]["Certificates"]["Install"][] | select(. == "\( $http_proxy_hostname ).pem")' \
+    yq \
+        '.["policies"]["Certificates"]["Install"][] | select(. == env(HTTP_PROXY_HOSTNAME) + ".pem")' \
         < "${FIREFOX_POLICIES_FILE_PATH}")" \
     ]; then
         temp_file_path="$(mktemp)"
-        jq \
-            --arg http_proxy_hostname "${HTTP_PROXY_HOSTNAME}" \
-            '.["policies"]["Certificates"]["Install"] +=
-            [
-                "\( $http_proxy_hostname ).pem"
-            ]
-        ' < "${FIREFOX_POLICIES_FILE_PATH}" > "${temp_file_path}"
+        yq \
+            --prettyPrint \
+            --output-format "json" \
+            '.["policies"]["Certificates"]["Install"] += env(HTTP_PROXY_HOSTNAME) + ".pem"' \
+            < "${FIREFOX_POLICIES_FILE_PATH}" \
+            > "${temp_file_path}"
         sudo mv "${temp_file_path}" "${FIREFOX_POLICIES_FILE_PATH}"
 fi
 

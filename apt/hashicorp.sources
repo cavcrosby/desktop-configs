@@ -1,5 +1,5 @@
 Types: deb
-URIs: https://apt.releases.hashicorp.com
+URIs: https://apt.releases.hashicorp.com/
 Suites: jammy
 Components: main
 Signed-By:

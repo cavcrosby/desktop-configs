@@ -7,6 +7,7 @@ SHELL = /usr/bin/sh
 
 # targets
 HELP = help
+SETUP = setup
 APPLY_GSETTINGS = apply-gsettings
 SYNC_GSETTINGS = sync-gsettings
 ADD_APT_SOURCES = add-apt-sources
@@ -22,11 +23,20 @@ INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 
 # executables
 ENVSUBST = envsubst
+PYTHON = python
+PIP = pip
+PRE_COMMIT = pre-commit
+executables = \
+	${PYTHON}
+
+_check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
 .PHONY: ${HELP}
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
+>	@printf '%s\n' '  ${SETUP}                              - installs the distro-independent dependencies for this'
+>	@printf '%s\n' '                                       repository'
 >	@printf '%s\n' '  ${APPLY_GSETTINGS}                    - apply the GNOME settings found in gsettings.txt'
 >	@printf '%s\n' '  ${SYNC_GSETTINGS}                     - sync the current desktop GNOME settings with what'\''s'
 >	@printf '%s\n' '                                       in gsettings.txt'
@@ -40,6 +50,12 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}            - install the Firefox web browser configurations'
 >	@printf '%s\n' '  ${INSTALL_PAM_ENV_CONF}               - install the pam_env.conf(5) environment variables file'
 >	@printf '%s\n' '  ${INSTALL_SSHD_PUBKEY_AUTH_CONF}      - install the sshd_config(5) sshd_pubkey_auth.conf file'
+
+.PHONY: ${SETUP}
+${SETUP}:
+>	${PYTHON} -m ${PIP} install --upgrade "${PIP}"
+>	${PYTHON} -m ${PIP} install --requirement "./requirements-dev.txt"
+>	${PRE_COMMIT} install
 
 .PHONY: ${APPLY_GSETTINGS}
 ${APPLY_GSETTINGS}:

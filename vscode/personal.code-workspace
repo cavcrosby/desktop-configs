@@ -32,6 +32,7 @@
     "settings": {
         "files.associations": {
             "**/homelab-cm/mitmproxy/templates/*.py.j2": "python",
-        }
+        },
+        "prettier.prettierPath": "./node_modules/prettier"
     }
 }

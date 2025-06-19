@@ -17,7 +17,7 @@
             "path": "./homelab-cm/mitmproxy"
         },
         {
-            "path": "./kubectl-pkg-repo"
+            "path": "./kubectl"
         },
         {
             "path": "./playground"

@@ -20,6 +20,7 @@ INSTALL_NAUTILUS_BOOKMARKS = install-nautilus-bookmarks
 INSTALL_FIREFOX_CONFIGS = install-firefox-configs
 INSTALL_PAM_ENV_CONF = install-pam-env-file
 INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
+INSTALL_SYSCTL_CONF = install-sysctl-conf
 
 # executables
 ENVSUBST = envsubst
@@ -50,6 +51,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_FIREFOX_CONFIGS}            - install the Firefox web browser configurations'
 >	@printf '%s\n' '  ${INSTALL_PAM_ENV_CONF}               - install the pam_env.conf(5) environment variables file'
 >	@printf '%s\n' '  ${INSTALL_SSHD_PUBKEY_AUTH_CONF}      - install the sshd_config(5) sshd_pubkey_auth.conf file'
+>	@printf '%s\n' '  ${INSTALL_SYSCTL_CONF}                - install the sysctl.conf(5) kernel parameters file'
 
 .PHONY: ${SETUP}
 ${SETUP}:
@@ -113,6 +115,10 @@ ${INSTALL_PAM_ENV_CONF}:
 ${INSTALL_SSHD_PUBKEY_AUTH_CONF}:
 >	sudo install --mode 644 "./sshd_pubkey_auth.conf" "/etc/ssh/sshd_config.d"
 >	sudo systemctl restart "sshd.service"
+
+.PHONY: ${INSTALL_SYSCTL_CONF}
+${INSTALL_SYSCTL_CONF}:
+>	sudo install --mode 644 "./sysctl.conf" "/etc/sysctl.d/99-desktop-configs.conf"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

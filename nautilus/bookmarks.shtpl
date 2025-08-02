@@ -1,2 +1,4 @@
 file://${HOME}/git
 file://${HOME}/src
+file://${HOME}/.vscode-oss/extensions vscode-oss-extensions
+file://${HOME}/.config/VSCodium/User/vsicons-custom-icons vsicons-custom-icons

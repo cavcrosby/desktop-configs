@@ -79,7 +79,7 @@ ${PRINT_DUPKEYBINDS}:
 
 .PHONY: ${INSTALL_CRONTAB}
 ${INSTALL_CRONTAB}:
->	crontab "./crontab.txt"
+>	crontab "./configs/crontab.txt"
 
 .PHONY: ${INSTALL_GDM_CONFIGS}
 ${INSTALL_GDM_CONFIGS}:
@@ -87,7 +87,7 @@ ${INSTALL_GDM_CONFIGS}:
 
 .PHONY: ${INSTALL_VSCODE_WORKSPACES}
 ${INSTALL_VSCODE_WORKSPACES}:
->	install --mode 644 "./vscode/personal.code-workspace" ".."
+>	install --mode 644 "./configs/vscode/personal.code-workspace" ".."
 
 .PHONY: ${SET_NAUTILUS_ICONS}
 ${SET_NAUTILUS_ICONS}:
@@ -96,7 +96,7 @@ ${SET_NAUTILUS_ICONS}:
 .PHONY: ${INSTALL_NAUTILUS_BOOKMARKS}
 ${INSTALL_NAUTILUS_BOOKMARKS}: local_config_files_vars = \
 								$${HOME}
-${INSTALL_NAUTILUS_BOOKMARKS}: ./nautilus/bookmarks
+${INSTALL_NAUTILUS_BOOKMARKS}: ./configs/bookmarks
 >	install --mode 664 "$^" "$${HOME}/.config/gtk-3.0/bookmarks"
 
 .PHONY: ${INSTALL_FIREFOX_CONFIGS}
@@ -105,28 +105,28 @@ ${INSTALL_FIREFOX_CONFIGS}: local_config_files_vars = \
 								$${HTTP_PROXY_PORT}
 ${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_HOSTNAME = proxy.homelab.cavcrosby.net
 ${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_PORT = 39600
-${INSTALL_FIREFOX_CONFIGS}: ./firefox/1m544c8z.default-release/user.js
+${INSTALL_FIREFOX_CONFIGS}: ./configs/firefox/1m544c8z.default-release/user.js
 >	./scripts/install-firefox-configs
 
 .PHONY: ${INSTALL_PAM_ENV_FILE}
 ${INSTALL_PAM_ENV_FILE}:
->	sudo install --mode 644 "./pam_env.conf" "/etc/security/pam_env.conf"
+>	sudo install --mode 644 "./configs/pam_env.conf" "/etc/security/pam_env.conf"
 >	sudo truncate --size 0 "/etc/environment"
 
 .PHONY: ${INSTALL_SSHD_PUBKEY_AUTH_CONF}
 ${INSTALL_SSHD_PUBKEY_AUTH_CONF}:
->	sudo install --mode 644 "./sshd_pubkey_auth.conf" "/etc/ssh/sshd_config.d"
+>	sudo install --mode 644 "./configs/sshd_pubkey_auth.conf" "/etc/ssh/sshd_config.d"
 >	sudo systemctl restart "sshd.service"
 
 .PHONY: ${INSTALL_SYSCTL_CONF}
 ${INSTALL_SYSCTL_CONF}:
->	sudo install --mode 644 "./sysctl.conf" "/etc/sysctl.d/99-desktop-configs.conf"
+>	sudo install --mode 644 "./configs/sysctl.conf" "/etc/sysctl.d/99-desktop-configs.conf"
 
 .PHONY: ${INSTALL_HOSTS_FILE}
 ${INSTALL_HOSTS_FILE}: local_config_files_vars = \
 						$${HOSTNAME}
 ${INSTALL_HOSTS_FILE}: export HOSTNAME = $(shell uname --nodename)
-${INSTALL_HOSTS_FILE}: ./hosts
+${INSTALL_HOSTS_FILE}: ./configs/hosts
 >	sudo install --mode 664 "$^" "/etc/hosts"
 
 %:: %.shtpl

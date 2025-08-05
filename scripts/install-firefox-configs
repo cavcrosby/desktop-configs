@@ -21,25 +21,25 @@ fi
 install \
 		-D \
 		--mode 644 \
-		"./firefox/1m544c8z.default-release/user.js" \
+		"./src/firefox/1m544c8z.default-release/user.js" \
 		"${HOME}/.mozilla/firefox/1m544c8z.default-release/user.js"
 
 install \
 		-D \
 		--mode 644 \
-		"./firefox/owjmdw8l.default/.gitignore" \
+		"./src/firefox/owjmdw8l.default/.gitignore" \
 		"${HOME}/.mozilla/firefox/owjmdw8l.default/.gitignore"
 
 install \
 		-D \
 		--mode 664 \
-		"./firefox/installs.ini" \
+		"./src/firefox/installs.ini" \
 		"${HOME}/.mozilla/firefox/installs.ini"
 
 install \
 		-D \
 		--mode 664 \
-		"./firefox/profiles.ini" \
+		"./src/firefox/profiles.ini" \
 		"${HOME}/.mozilla/firefox/profiles.ini"
 
 FIREFOX_CERTS_DIR_PATH="/usr/lib/mozilla/certificates"

@@ -23,8 +23,8 @@ while read -r schema key value; do
     fi
 
     printf "%s %s %s\n" "${schema}" "${key}" "${value}" >> "${temp_file_path}"
-done < "./gsettings.txt"
+done < "./src/gsettings.txt"
 
-mv "${temp_file_path}" "./gsettings.txt"
+mv "${temp_file_path}" "./src/gsettings.txt"
 
 exit 0

@@ -14,19 +14,19 @@ if [ "$(id --user)" != "${ROOT_UID}" ]; then
     exit 1
 fi
 
-install --mode 644 "./gdm/profile" "/etc/dconf/profile/gdm"
+install --mode 644 "./src/gdm/profile" "/etc/dconf/profile/gdm"
 install \
     -D \
     --mode 644 \
     --target-directory "/etc/dconf/db/gdm.d" \
-    "./gdm/00-desktop-configs"
+    "./src/gdm/00-desktop-configs"
 
-if [ -r "./gdm/00-desktop-configs.local" ]; then
+if [ -r "./src/gdm/00-desktop-configs.local" ]; then
     install \
         -D \
         --mode 644 \
         --target-directory "/etc/dconf/db/gdm.d" \
-        "./gdm/00-desktop-configs.local"
+        "./src/gdm/00-desktop-configs.local"
 fi
 
 dconf update

@@ -15,18 +15,18 @@ if [ "$(id --user)" != "${ROOT_UID}" ]; then
     exit 1
 fi
 
-install --mode 644 "./apt/docker.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/hashicorp.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/helm.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/papirus-icons.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/vscodium.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/mozilla.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
-install --mode 644 "./apt/fastfetch.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/kubectl.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/opentofu.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./apt/opentofu.gpg" "/etc/apt/keyrings"
-install --mode 644 "./apt/opentofu-repo.gpg" "/etc/apt/keyrings"
+install --mode 644 "./src/apt/docker.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/hashicorp.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/helm.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/papirus-icons.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/vscodium.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/mozilla.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
+install --mode 644 "./src/apt/fastfetch.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/kubectl.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/opentofu.sources" "/etc/apt/sources.list.d"
+install --mode 644 "./src/apt/opentofu.gpg" "/etc/apt/keyrings"
+install --mode 644 "./src/apt/opentofu-repo.gpg" "/etc/apt/keyrings"
 
 apt-get update
 

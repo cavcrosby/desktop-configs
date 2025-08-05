@@ -1,6 +1,6 @@
 .python-version
-/gsettings.txt.local
-/hosts
-/gdm/00-desktop-configs.local
-/nautilus/bookmarks
-/firefox/1m544c8z.default-release/user.js
+/src/gsettings.txt.local
+/src/hosts
+/src/gdm/00-desktop-configs.local
+/src/bookmarks
+/src/firefox/1m544c8z.default-release/user.js

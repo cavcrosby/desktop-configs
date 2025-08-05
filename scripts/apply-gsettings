@@ -23,9 +23,9 @@ if ! [ "$(command -v gsettings)" ]; then
     exit 1
 fi
 
-apply_gsettings "./gsettings.txt"
-if [ -r "./gsettings.txt.local" ]; then
-    apply_gsettings "./gsettings.txt.local"
+apply_gsettings "./src/gsettings.txt"
+if [ -r "./src/gsettings.txt.local" ]; then
+    apply_gsettings "./src/gsettings.txt.local"
 fi
 
 exit 0

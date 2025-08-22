@@ -21,7 +21,8 @@ INSTALL_FIREFOX_CONFIGS = install-firefox-configs
 INSTALL_PAM_ENV_CONF = install-pam-env-conf
 INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 INSTALL_SYSCTL_CONF = install-sysctl-conf
-INSTALL_HOSTS_FILE = install-hosts-file
+INSTALL_NSSWITCH_CONF = install-nsswitch-conf
+INSTALL_RESOLVED_CONF = install-resolved-conf
 
 # executables
 ENVSUBST = envsubst
@@ -53,7 +54,8 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_PAM_ENV_CONF}               - install the pam_env.conf(5) environment variables file'
 >	@printf '%s\n' '  ${INSTALL_SSHD_PUBKEY_AUTH_CONF}      - install the sshd_config(5) sshd_pubkey_auth.conf file'
 >	@printf '%s\n' '  ${INSTALL_SYSCTL_CONF}                - install the sysctl.conf(5) kernel parameters file'
->	@printf '%s\n' '  ${INSTALL_HOSTS_FILE}                 - install the hosts(5) hostnames file'
+>	@printf '%s\n' '  ${INSTALL_NSSWITCH_CONF}              - install the nsswitch.conf(5) sources file'
+>	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
 
 .PHONY: ${SETUP}
 ${SETUP}:
@@ -122,12 +124,17 @@ ${INSTALL_SSHD_PUBKEY_AUTH_CONF}:
 ${INSTALL_SYSCTL_CONF}:
 >	sudo install --mode 644 "./src/sysctl.conf" "/etc/sysctl.d/99-desktop-configs.conf"
 
-.PHONY: ${INSTALL_HOSTS_FILE}
-${INSTALL_HOSTS_FILE}: local_config_files_vars = \
-						$${HOSTNAME}
-${INSTALL_HOSTS_FILE}: export HOSTNAME = $(shell uname --nodename)
-${INSTALL_HOSTS_FILE}: ./src/hosts
->	sudo install --mode 664 "$^" "/etc/hosts"
+.PHONY: ${INSTALL_NSSWITCH_CONF}
+${INSTALL_NSSWITCH_CONF}:
+>	sudo install --mode 644 "./src/nsswitch.conf" "/etc/nsswitch.conf"
+
+.PHONY: ${INSTALL_RESOLVED_CONF}
+${INSTALL_RESOLVED_CONF}:
+>	sudo mkdir --parents "/etc/systemd/resolved.conf.d"
+>	sudo install \
+		--mode 644 \
+		"./src/resolved.conf" \
+		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

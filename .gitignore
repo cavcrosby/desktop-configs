@@ -1,6 +1,5 @@
 .python-version
 /configs/gsettings.txt.local
-/configs/hosts
 /configs/gdm/00-desktop-configs.local
 /configs/bookmarks
 /configs/firefox/1m544c8z.default-release/user.js

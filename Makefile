@@ -23,6 +23,7 @@ INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 INSTALL_SYSCTL_CONF = install-sysctl-conf
 INSTALL_NSSWITCH_CONF = install-nsswitch-conf
 INSTALL_RESOLVED_CONF = install-resolved-conf
+CLEAN = clean
 
 # executables
 ENVSUBST = envsubst
@@ -56,6 +57,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_SYSCTL_CONF}                - install the sysctl.conf(5) kernel parameters file'
 >	@printf '%s\n' '  ${INSTALL_NSSWITCH_CONF}              - install the nsswitch.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
+>	@printf '%s\n' '  ${CLEAN}                              - removes files generated from targets'
 
 .PHONY: ${SETUP}
 ${SETUP}:
@@ -135,6 +137,13 @@ ${INSTALL_RESOLVED_CONF}:
 		--mode 644 \
 		"./src/resolved.conf" \
 		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"
+
+.PHONY: ${CLEAN}
+${CLEAN}:
+>	rm \
+		--force \
+		"./src/bookmarks" \
+		"./src/firefox/1m544c8z.default-release/user.js"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

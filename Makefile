@@ -39,7 +39,7 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
->	@printf '%s\n' '  ${SETUP}                              - installs the distro-independent dependencies for this'
+>	@printf '%s\n' '  ${SETUP}                              - install the distro-independent dependencies for this'
 >	@printf '%s\n' '                                       repository'
 >	@printf '%s\n' '  ${APPLY_GSETTINGS}                    - apply the GNOME settings found in gsettings.txt'
 >	@printf '%s\n' '  ${SYNC_GSETTINGS}                     - sync the current desktop GNOME settings with what'\''s'
@@ -57,7 +57,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_SYSCTL_CONF}                - install the sysctl.conf(5) kernel parameters file'
 >	@printf '%s\n' '  ${INSTALL_NSSWITCH_CONF}              - install the nsswitch.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
->	@printf '%s\n' '  ${CLEAN}                              - removes files generated from targets'
+>	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
 ${SETUP}:

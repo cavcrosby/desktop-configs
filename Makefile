@@ -23,6 +23,7 @@ INSTALL_SSHD_PUBKEY_AUTH_CONF = install-sshd-pubkey-auth-conf
 INSTALL_SYSCTL_CONF = install-sysctl-conf
 INSTALL_NSSWITCH_CONF = install-nsswitch-conf
 INSTALL_RESOLVED_CONF = install-resolved-conf
+INSTALL_SYSTEMD_UNIT_FILES = install-systemd-unit-files
 CLEAN = clean
 
 # executables
@@ -46,7 +47,6 @@ ${HELP}:
 >	@printf '%s\n' '                                       in gsettings.txt'
 >	@printf '%s\n' '  ${ADD_APT_SOURCES}                    - add apt data sources formatted according to sources.list(5)'
 >	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}                  - print GNOME keybinding settings that use the same value'
->	@printf '%s\n' '  ${INSTALL_CRONTAB}                    - install the crontab(5) tables from crontab.txt'
 >	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}                - install the GNOME Display Manager configurations'
 >	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}          - install the Visual Studio Code workspaces'
 >	@printf '%s\n' '  ${SET_NAUTILUS_ICONS}                 - set icons for files displayed by the Nautilus file manager'
@@ -57,6 +57,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_SYSCTL_CONF}                - install the sysctl.conf(5) kernel parameters file'
 >	@printf '%s\n' '  ${INSTALL_NSSWITCH_CONF}              - install the nsswitch.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
+>	@printf '%s\n' '  ${INSTALL_SYSTEMD_UNIT_FILES}         - install the systemd.unit(5) files'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -80,10 +81,6 @@ ${ADD_APT_SOURCES}:
 .PHONY: ${PRINT_DUPKEYBINDS}
 ${PRINT_DUPKEYBINDS}:
 >	./scripts/print-dupkeybinds
-
-.PHONY: ${INSTALL_CRONTAB}
-${INSTALL_CRONTAB}:
->	crontab "./src/crontab.txt"
 
 .PHONY: ${INSTALL_GDM_CONFIGS}
 ${INSTALL_GDM_CONFIGS}:
@@ -138,12 +135,21 @@ ${INSTALL_RESOLVED_CONF}:
 		"./src/resolved.conf" \
 		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"
 
+.PHONY: ${INSTALL_SYSTEMD_UNIT_FILES}
+${INSTALL_SYSTEMD_UNIT_FILES}: local_config_files_vars = \
+								$${SYSTEMD_SENDMAIL_SCRIPT_PATH}
+${INSTALL_SYSTEMD_UNIT_FILES}: export SYSTEMD_SENDMAIL_SCRIPT_PATH = ${HOME}/.local/libexec/systemd/sendmail
+${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/sendmail@.service
+${INSTALL_SYSTEMD_UNIT_FILES}:
+>	./scripts/install-systemd-unit-files
+
 .PHONY: ${CLEAN}
 ${CLEAN}:
 >	rm \
 		--force \
 		"./src/bookmarks" \
-		"./src/firefox/1m544c8z.default-release/user.js"
+		"./src/firefox/1m544c8z.default-release/user.js" \
+		"./src/systemd/sendmail@.service"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

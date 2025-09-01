@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly timer for a service
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+RandomizedDelaySec=10m
+Unit=%i.service
+
+[Install]
+WantedBy=default.target

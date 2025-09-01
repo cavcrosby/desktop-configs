@@ -1,0 +1,7 @@
+[Unit]
+Description=Cron runner for rclone
+OnFailure=sendmail@rclone-amazon-music.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone copy "crosbyco3:/Music/Amazon Music" "${HOME}/Music/amazon_music"

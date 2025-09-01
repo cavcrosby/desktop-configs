@@ -1,0 +1,7 @@
+[Unit]
+Description=Cron runner for rclone
+OnFailure=sendmail@rclone-books.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone copy "crosbyco3:/Computing Books And Material" "${HOME}/Documents/books"

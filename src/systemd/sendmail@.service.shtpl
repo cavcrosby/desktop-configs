@@ -1,0 +1,6 @@
+[Unit]
+Description=Send email w/latest systemd(1) journal logs for a service
+
+[Service]
+Type=oneshot
+ExecStart=${SYSTEMD_SENDMAIL_SCRIPT_PATH} "%i.service"

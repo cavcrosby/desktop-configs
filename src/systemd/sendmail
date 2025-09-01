@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Sends an email with the latest systemd(1) journal logs for a service.
+
+set -eo pipefail
+
+service_name="$1"
+invocation_id="$(\
+    systemctl show \
+        --user \
+        --value \
+        --property "InvocationID" \
+        "${service_name}" \
+)"
+
+printf \
+    "Subject: ${LOGNAME}@${HOSTNAME} ${service_name}\n\n%s\n" \
+    "$(\
+        journalctl \
+            --user \
+            --unit "${service_name}" \
+            "_SYSTEMD_INVOCATION_ID=${invocation_id}" \
+    )" \
+    | msmtp --account "gmail" "cavcrosby@gmail.com"
+
+exit 0

@@ -1,0 +1,7 @@
+[Unit]
+Description=Cron runner for rclone
+OnFailure=sendmail@rclone-google-music.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone copy "crosbyco3:/Music/Google Music" "${HOME}/Music/google_music"

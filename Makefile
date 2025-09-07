@@ -24,6 +24,7 @@ INSTALL_SYSCTL_CONF = install-sysctl-conf
 INSTALL_NSSWITCH_CONF = install-nsswitch-conf
 INSTALL_RESOLVED_CONF = install-resolved-conf
 INSTALL_SYSTEMD_UNIT_FILES = install-systemd-unit-files
+INSTALL_USER_ICON = install-user-icon
 CLEAN = clean
 
 # executables
@@ -58,6 +59,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_NSSWITCH_CONF}              - install the nsswitch.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_SYSTEMD_UNIT_FILES}         - install the systemd.unit(5) files'
+>	@printf '%s\n' '  ${INSTALL_USER_ICON}                  - install my operating system user'\''s icon'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -142,6 +144,13 @@ ${INSTALL_SYSTEMD_UNIT_FILES}: export SYSTEMD_SENDMAIL_SCRIPT_PATH = ${HOME}/.lo
 ${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/sendmail@.service
 ${INSTALL_SYSTEMD_UNIT_FILES}:
 >	./scripts/install-systemd-unit-files
+
+.PHONY: ${INSTALL_USER_ICON}
+${INSTALL_USER_ICON}:
+>	sudo install \
+		--mode 644 \
+		"./src/user-icon" \
+		"/var/lib/AccountsService/icons/$${LOGNAME}"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

@@ -1,4 +1,5 @@
 .python-version
+node_modules/
 /src/gsettings.txt.local
 /src/gdm/00-desktop-configs.local
 /src/bookmarks

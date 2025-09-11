@@ -11,3 +11,19 @@ repos:
     rev: v0.10.0
     hooks:
       - id: shellcheck
+
+  - repo: https://github.com/pre-commit/mirrors-eslint.git
+    rev: v9.35.0
+    hooks:
+    -   id: eslint
+
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier --write
+        language: node
+        types:
+          - javascript
+        additional_dependencies:
+          - prettier@3.6.2

@@ -25,6 +25,7 @@ INSTALL_NSSWITCH_CONF = install-nsswitch-conf
 INSTALL_RESOLVED_CONF = install-resolved-conf
 INSTALL_SYSTEMD_UNIT_FILES = install-systemd-unit-files
 INSTALL_USER_ICON = install-user-icon
+SYNC_FIREFOX_PREFS = sync-firefox-prefs
 CLEAN = clean
 
 # executables
@@ -32,8 +33,10 @@ ENVSUBST = envsubst
 PYTHON = python
 PIP = pip
 PRE_COMMIT = pre-commit
+NPM = npm
 executables = \
-	${PYTHON}
+	${PYTHON}\
+	${NPM}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
@@ -60,12 +63,15 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_RESOLVED_CONF}              - install the resolved.conf(5) sources file'
 >	@printf '%s\n' '  ${INSTALL_SYSTEMD_UNIT_FILES}         - install the systemd.unit(5) files'
 >	@printf '%s\n' '  ${INSTALL_USER_ICON}                  - install my operating system user'\''s icon'
+>	@printf '%s\n' '  ${SYNC_FIREFOX_PREFS}                 - sync the Firefox preferences from the prefs.js file with'
+>	@printf '%s\n' '                                       what'\''s in the user.js file'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
 ${SETUP}:
 >	${PYTHON} -m ${PIP} install --upgrade "${PIP}"
 >	${PYTHON} -m ${PIP} install --requirement "./requirements-dev.txt"
+>	${NPM} install
 >	${PRE_COMMIT} install
 
 .PHONY: ${APPLY_GSETTINGS}
@@ -151,6 +157,10 @@ ${INSTALL_USER_ICON}:
 		--mode 644 \
 		"./src/user-icon" \
 		"/var/lib/AccountsService/icons/$${LOGNAME}"
+
+.PHONY: ${SYNC_FIREFOX_PREFS}
+${SYNC_FIREFOX_PREFS}:
+>	./scripts/sync-firefox-prefs.js
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

@@ -26,6 +26,7 @@ INSTALL_RESOLVED_CONF = install-resolved-conf
 INSTALL_SYSTEMD_UNIT_FILES = install-systemd-unit-files
 INSTALL_USER_ICON = install-user-icon
 SYNC_FIREFOX_PREFS = sync-firefox-prefs
+INSTALL_APPARMOR_MSMTP_RULES = install-apparmor-msmtp-rules
 CLEAN = clean
 
 # executables
@@ -34,9 +35,11 @@ PYTHON = python
 PIP = pip
 PRE_COMMIT = pre-commit
 NPM = npm
+APPARMOR_PARSER = apparmor_parser
 executables = \
 	${PYTHON}\
-	${NPM}
+	${NPM}\
+	${APPARMOR_PARSER}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
@@ -65,6 +68,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_USER_ICON}                  - install my operating system user'\''s icon'
 >	@printf '%s\n' '  ${SYNC_FIREFOX_PREFS}                 - sync the Firefox preferences from the prefs.js file with'
 >	@printf '%s\n' '                                       what'\''s in the user.js file'
+>	@printf '%s\n' '  ${INSTALL_APPARMOR_MSMTP_RULES}       - install additional apparmor.d(5) rules for usr.bin.msmtp'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -161,6 +165,15 @@ ${INSTALL_USER_ICON}:
 .PHONY: ${SYNC_FIREFOX_PREFS}
 ${SYNC_FIREFOX_PREFS}:
 >	./scripts/sync-firefox-prefs.js
+
+.PHONY: ${INSTALL_APPARMOR_MSMTP_RULES}
+${INSTALL_APPARMOR_MSMTP_RULES}:
+> 	sudo install \
+		--mode 644 \
+		"./src/usr.bin.msmtp" \
+		"/etc/apparmor.d/local/usr.bin.msmtp"
+
+>	sudo ${APPARMOR_PARSER} --replace "/etc/apparmor.d/usr.bin.msmtp"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

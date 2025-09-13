@@ -1,0 +1,3 @@
+# vim:syntax=apparmor
+
+  owner @{HOME}/**/.netrc r,

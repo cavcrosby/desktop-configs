@@ -25,7 +25,7 @@ for schema in "${SCHEMAS[@]}"; do
     while read -r key; do
         value="$(gsettings get "${schema}" "${key}")"
         if [ "${value}" != '@as []' ]; then
-            # parse keybindings to loop over by mangling the following:
+            # parses keybindings to loop over by mangling the following:
             #   - ['
             #   - ', '
             #   - ']

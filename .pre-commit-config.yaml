@@ -1,19 +1,19 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
       - id: check-added-large-files
       - id: trailing-whitespace
 
   - repo: https://github.com/koalaman/shellcheck-precommit.git
-    rev: v0.10.0
+    rev: v0.11.0
     hooks:
       - id: shellcheck
 
   - repo: https://github.com/pre-commit/mirrors-eslint.git
-    rev: v9.35.0
+    rev: v9.37.0
     hooks:
     -   id: eslint
 

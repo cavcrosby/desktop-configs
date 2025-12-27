@@ -9,7 +9,6 @@ PROGNAME="$(basename "$0")"
 readonly PROGNAME
 SCHEMAS=(
     "org.gnome.desktop.wm.keybindings"
-    "org.gnome.metacity.keybindings"
     "org.gnome.mutter.keybindings"
     "org.gnome.mutter.wayland.keybindings"
     "org.gnome.shell.keybindings"

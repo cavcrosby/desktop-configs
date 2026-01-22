@@ -46,8 +46,8 @@ FIREFOX_CERTS_DIR_PATH="/usr/lib/mozilla/certificates"
 sudo mkdir --parents "${FIREFOX_CERTS_DIR_PATH}"
 if ! sudo curl \
     --silent \
-    --proxy "http://${HTTP_PROXY_HOSTNAME}:${HTTP_PROXY_PORT}/" \
-    --output "${FIREFOX_CERTS_DIR_PATH}/${HTTP_PROXY_HOSTNAME}.pem" \
+    --proxy "http://${HTTP_PROXY_HOST}:${HTTP_PROXY_PORT}/" \
+    --output "${FIREFOX_CERTS_DIR_PATH}/${HTTP_PROXY_HOST}.pem" \
     "http://mitm.it/cert/pem"; then
         exit 0
 fi
@@ -59,7 +59,7 @@ if ! [ -r "${FIREFOX_POLICIES_FILE_PATH}" ]; then
     "policies": {
         "Certificates": {
             "Install": [
-                "${HTTP_PROXY_HOSTNAME}.pem"
+                "${HTTP_PROXY_HOST}.pem"
             ]
         }
     }
@@ -67,14 +67,14 @@ if ! [ -r "${FIREFOX_POLICIES_FILE_PATH}" ]; then
 _EOF_
 elif ! [ "$(\
     yq \
-        '.["policies"]["Certificates"]["Install"][] | select(. == env(HTTP_PROXY_HOSTNAME) + ".pem")' \
+        '.["policies"]["Certificates"]["Install"][] | select(. == env(HTTP_PROXY_HOST) + ".pem")' \
         < "${FIREFOX_POLICIES_FILE_PATH}")" \
     ]; then
         temp_file_path="$(mktemp)"
         yq \
             --prettyPrint \
             --output-format "json" \
-            '.["policies"]["Certificates"]["Install"] += env(HTTP_PROXY_HOSTNAME) + ".pem"' \
+            '.["policies"]["Certificates"]["Install"] += env(HTTP_PROXY_HOST) + ".pem"' \
             < "${FIREFOX_POLICIES_FILE_PATH}" \
             > "${temp_file_path}"
         sudo mv "${temp_file_path}" "${FIREFOX_POLICIES_FILE_PATH}"

@@ -114,9 +114,9 @@ ${INSTALL_NAUTILUS_BOOKMARKS}: ./src/bookmarks
 
 .PHONY: ${INSTALL_FIREFOX_CONFIGS}
 ${INSTALL_FIREFOX_CONFIGS}: local_config_files_vars = \
-								$${HTTP_PROXY_HOSTNAME}\
+								$${HTTP_PROXY_HOST}\
 								$${HTTP_PROXY_PORT}
-${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_HOSTNAME = proxy.homelab.cavcrosby.net
+${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_HOST = proxy.homelab.cavcrosby.net
 ${INSTALL_FIREFOX_CONFIGS}: export HTTP_PROXY_PORT = 39600
 ${INSTALL_FIREFOX_CONFIGS}: ./src/firefox/1m544c8z.default-release/user.js
 >	./scripts/install-firefox-configs

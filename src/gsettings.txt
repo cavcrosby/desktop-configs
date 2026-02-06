@@ -101,6 +101,7 @@ org.gnome.shell.extensions.pop-shell focus-left ['<Super>Left', '<Super>KP_Left'
 org.gnome.shell.extensions.pop-shell focus-right ['<Super>Right', '<Super>KP_Right']
 org.gnome.shell.extensions.pop-shell pop-monitor-left ['<Super><Shift>Left', '<Super><Shift>KP_Left', '<Super><Shift>h']
 org.gnome.shell.extensions.pop-shell pop-monitor-right ['<Super><Shift>Right', '<Super><Shift>KP_Right', '<Super><Shift>l']
+org.gnome.shell.keybindings focus-active-notification @as []
 org.gnome.shell.keybindings screenshot ['<Shift>Print']
 org.gnome.shell.keybindings screenshot-window ['<Alt>Print']
 org.gnome.shell.keybindings show-screenshot-ui ['Print']

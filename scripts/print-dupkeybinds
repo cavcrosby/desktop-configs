@@ -12,6 +12,7 @@ SCHEMAS=(
     "org.gnome.mutter.keybindings"
     "org.gnome.mutter.wayland.keybindings"
     "org.gnome.shell.keybindings"
+    "org.gnome.settings-daemon.plugins.media-keys"
 )
 
 if ! [ "$(command -v gsettings)" ]; then

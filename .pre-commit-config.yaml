@@ -13,7 +13,7 @@ repos:
       - id: shellcheck
 
   - repo: https://github.com/pre-commit/mirrors-eslint.git
-    rev: v9.37.0
+    rev: v10.0.0
     hooks:
     -   id: eslint
 
@@ -26,4 +26,4 @@ repos:
         types:
           - javascript
         additional_dependencies:
-          - prettier@3.6.2
+          - prettier@3.8.1

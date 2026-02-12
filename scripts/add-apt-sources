@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Adds apt data sources and preferences fragment files that are formatted
+# Adds APT data sources and preferences fragment files that are formatted
 # according to sources.list(5) and apt_preferences(5) respectively.
 
 set -eo pipefail

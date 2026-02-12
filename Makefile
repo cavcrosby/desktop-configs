@@ -52,7 +52,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${APPLY_GSETTINGS}                    - apply the GNOME settings found in gsettings.txt'
 >	@printf '%s\n' '  ${SYNC_GSETTINGS}                     - sync the current desktop GNOME settings with what'\''s'
 >	@printf '%s\n' '                                       in gsettings.txt'
->	@printf '%s\n' '  ${ADD_APT_SOURCES}                    - add apt data sources formatted according to sources.list(5)'
+>	@printf '%s\n' '  ${ADD_APT_SOURCES}                    - add APT data sources formatted according to sources.list(5)'
 >	@printf '%s\n' '  ${PRINT_DUPKEYBINDS}                  - print GNOME keybinding settings that use the same value'
 >	@printf '%s\n' '  ${INSTALL_GDM_CONFIGS}                - install the GNOME Display Manager configurations'
 >	@printf '%s\n' '  ${INSTALL_VSCODE_WORKSPACES}          - install the Visual Studio Code workspaces'

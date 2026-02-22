@@ -1,6 +1,9 @@
 {
     "folders": [
         {
+            "path": "./aptly-api"
+        },
+        {
             "path": "./aws-cli"
         },
         {

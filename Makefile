@@ -27,6 +27,7 @@ INSTALL_SYSTEMD_UNIT_FILES = install-systemd-unit-files
 INSTALL_USER_ICON = install-user-icon
 SYNC_FIREFOX_PREFS = sync-firefox-prefs
 INSTALL_APPARMOR_MSMTP_RULES = install-apparmor-msmtp-rules
+INSTALL_WALLPAPERS = install-wallpapers
 CLEAN = clean
 
 # executables
@@ -69,6 +70,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${SYNC_FIREFOX_PREFS}                 - sync the Firefox preferences from the prefs.js file with'
 >	@printf '%s\n' '                                       what'\''s in the user.js file'
 >	@printf '%s\n' '  ${INSTALL_APPARMOR_MSMTP_RULES}       - install additional apparmor.d(5) rules for usr.bin.msmtp'
+>	@printf '%s\n' '  ${INSTALL_WALLPAPERS}                 - install my selection of desktop wallpapers'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -175,13 +177,20 @@ ${INSTALL_APPARMOR_MSMTP_RULES}:
 
 >	sudo ${APPARMOR_PARSER} --replace "/etc/apparmor.d/usr.bin.msmtp"
 
+.PHONY: ${INSTALL_WALLPAPERS}
+${INSTALL_WALLPAPERS}: local_config_files_vars = \
+						$${HOME}
+${INSTALL_WALLPAPERS}: ./src/wallpapers.xml
+>	./scripts/install-wallpapers
+
 .PHONY: ${CLEAN}
 ${CLEAN}:
 >	rm \
 		--force \
 		"./src/bookmarks" \
 		"./src/firefox/1m544c8z.default-release/user.js" \
-		"./src/systemd/sendmail@.service"
+		"./src/systemd/sendmail@.service" \
+		"./src/wallpapers.xml"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

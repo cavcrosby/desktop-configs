@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# Installs my selection of desktop wallpapers.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+
+if ! [ "$(command -v rclone)" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "rclone cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+mkdir --parents "${HOME}/.local/share/backgrounds"
+rclone copy \
+    --include "6000x4000-unsplash-eberhardgross-OaXn4QRu-QQ.jpg" \
+    --include "5472x3648-unsplash-eberhardgross-2gNx4aKQYvY.jpg" \
+    --include "4032x3024-cloudinary-tools-jxltopng-f43-01-day.png" \
+    --include "4032x3024-cloudinary-tools-jxltopng-f43-01-night.png" \
+    --include "3840x2160-pxfuel-kde-plasma-5.6-graphite.jpg" \
+    --include "4320x2160-hacktoberfest-2022-dark-hacktoberfest.png" \
+    --include "3840x2160-reddit-pop-os-galaxy.png" \
+    --include "7680x4320-reddit-pop-os-nord.jpg" \
+    --include "3840x2160-reddit-pop-os-galaxy.png" \
+    --include "7680x4320-reddit-pop-os-nord.jpg" \
+    --include "3849x2160-github-pop-os-kate-hazen-fractal-mountains.png" \
+    "crosbyco3:/Photos/Wallpapers" \
+    "${HOME}/.local/share/backgrounds"
+
+install \
+    -D \
+    --mode 644 \
+    --target-directory "${HOME}/.local/share/gnome-background-properties" \
+    "./src/wallpapers.xml"
+
+exit 0

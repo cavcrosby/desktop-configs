@@ -27,11 +27,6 @@ install \
 
 install \
     --mode 644 \
-    "./src/systemd/rclone-wallpapers.service" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/sendmail@.service" \
     "${HOME}/.config/systemd/user"
 
@@ -49,8 +44,5 @@ systemctl start --user "hourly@rclone-books.timer"
 
 systemctl enable --user "hourly@rclone-google-music.timer"
 systemctl start --user "hourly@rclone-google-music.timer"
-
-systemctl enable --user "hourly@rclone-wallpapers.timer"
-systemctl start --user "hourly@rclone-wallpapers.timer"
 
 exit 0

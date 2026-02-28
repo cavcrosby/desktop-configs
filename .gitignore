@@ -1,7 +1,8 @@
 .python-version
 node_modules/
 /src/gsettings.txt.local
-/src/gdm/00-desktop-configs.local
 /src/bookmarks
+/src/wallpapers.xml
 /src/firefox/1m544c8z.default-release/user.js
 /src/systemd/sendmail@.service
+/src/gdm/00-desktop-configs.local

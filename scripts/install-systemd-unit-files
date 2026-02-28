@@ -27,11 +27,6 @@ install \
 
 install \
     --mode 644 \
-    "./src/systemd/rclone-wallpapers.service" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/sendmail@.service" \
     "${HOME}/.config/systemd/user"
 

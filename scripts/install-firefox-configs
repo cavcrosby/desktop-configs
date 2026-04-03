@@ -19,28 +19,28 @@ if ! [ "$(command -v yq)" ]; then
 fi
 
 install \
-		-D \
-		--mode 644 \
-		"./src/firefox/1m544c8z.default-release/user.js" \
-		"${HOME}/.mozilla/firefox/1m544c8z.default-release/user.js"
+    -D \
+    --mode 644 \
+    "./src/firefox/1m544c8z.default-release/user.js" \
+    "${HOME}/.mozilla/firefox/1m544c8z.default-release/user.js"
 
 install \
-		-D \
-		--mode 644 \
-		"./src/firefox/owjmdw8l.default/.gitignore" \
-		"${HOME}/.mozilla/firefox/owjmdw8l.default/.gitignore"
+    -D \
+    --mode 644 \
+    "./src/firefox/owjmdw8l.default/.gitignore" \
+    "${HOME}/.mozilla/firefox/owjmdw8l.default/.gitignore"
 
 install \
-		-D \
-		--mode 664 \
-		"./src/firefox/installs.ini" \
-		"${HOME}/.mozilla/firefox/installs.ini"
+    -D \
+    --mode 664 \
+    "./src/firefox/installs.ini" \
+    "${HOME}/.mozilla/firefox/installs.ini"
 
 install \
-		-D \
-		--mode 664 \
-		"./src/firefox/profiles.ini" \
-		"${HOME}/.mozilla/firefox/profiles.ini"
+    -D \
+    --mode 664 \
+    "./src/firefox/profiles.ini" \
+    "${HOME}/.mozilla/firefox/profiles.ini"
 
 FIREFOX_CERTS_DIR_PATH="/usr/lib/mozilla/certificates"
 sudo mkdir --parents "${FIREFOX_CERTS_DIR_PATH}"

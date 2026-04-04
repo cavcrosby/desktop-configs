@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Installs packages built from my maintained copy of Plymouth.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+PKGS=(
+    "libplymouth5"
+    "plymouth"
+    "plymouth-label"
+    "plymouth-themes"
+)
+
+install_plymouth_pkg() {
+    local pkg="$1"
+    if [ "$(apt-mark showhold "${pkg}")" ]; then
+        sudo apt-mark unhold "${pkg}" > "/dev/null"
+    fi
+
+    if ! res="$(\
+        curl \
+            --silent \
+            --fail \
+            --show-error \
+            --location \
+            --remote-name \
+            --stderr "-" \
+            --output-dir "/tmp" \
+            "https://github.com/cavcrosby/plymouth/releases/download/debian/24.004.60-5.1.1/${pkg}_24.004.60-5.1.1_amd64.deb" \
+    )"; then
+        printf \
+            '%s: %s: %s\n' \
+            "${PROGNAME}" \
+            "couldn't fetch ${pkg} package" \
+            "${res}" \
+            >&2
+
+        sudo apt-mark hold "${pkg}" > "/dev/null"
+        return 1
+    fi
+
+    sudo apt-get install \
+        -qq \
+        "/tmp/${pkg}_24.004.60-5.1.1_amd64.deb" \
+        > "/dev/null"
+
+    sudo apt-mark hold "${pkg}" > "/dev/null"
+}
+
+if ! [ "$(command -v curl)" ]; then
+    printf '%s: %s\n' "${PROGNAME}" "curl cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+for pkg in "${PKGS[@]}"; do
+    if ! install_plymouth_pkg "${pkg}"; then
+        exit 1
+    fi
+done
+
+exit 0

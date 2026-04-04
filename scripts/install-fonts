@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Installs the system text fonts.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+readonly ROOT_UID=0
+
+if [ "$(id --user)" != "${ROOT_UID}" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "you must run this as root" >&2
+    exit 1
+fi
+
+install \
+	-D \
+	--mode 644 \
+	--target-directory "/usr/share/fonts/opentype/fira" \
+	"./src/fonts/SIL_Open_Font_License.txt"
+
+install \
+	-D \
+	--mode 644 \
+	--target-directory "/usr/share/fonts/opentype/fira" \
+	"./src/fonts/FiraSans-Regular.otf"

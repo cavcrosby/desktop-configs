@@ -28,6 +28,9 @@ INSTALL_USER_ICON = install-user-icon
 SYNC_FIREFOX_PREFS = sync-firefox-prefs
 INSTALL_APPARMOR_MSMTP_RULES = install-apparmor-msmtp-rules
 INSTALL_WALLPAPERS = install-wallpapers
+INSTALL_FONTS = install-fonts
+INSTALL_PLYMOUTH = install-plymouth
+INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 CLEAN = clean
 
 # executables
@@ -71,6 +74,9 @@ ${HELP}:
 >	@printf '%s\n' '                                       what'\''s in the user.js file'
 >	@printf '%s\n' '  ${INSTALL_APPARMOR_MSMTP_RULES}       - install additional apparmor.d(5) rules for usr.bin.msmtp'
 >	@printf '%s\n' '  ${INSTALL_WALLPAPERS}                 - install my selection of desktop wallpapers'
+>	@printf '%s\n' '  ${INSTALL_FONTS}                      - install the system text fonts'
+>	@printf '%s\n' '  ${INSTALL_PLYMOUTH}                   - install packages built from my maintained copy of Plymouth'
+>	@printf '%s\n' '  ${INSTALL_PLYMOUTH_THEMES}            - install my Plymouth themes'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -182,6 +188,26 @@ ${INSTALL_WALLPAPERS}: local_config_files_vars = \
 						$${HOME}
 ${INSTALL_WALLPAPERS}: ./src/wallpapers.xml
 >	./scripts/install-wallpapers
+
+.PHONY: ${INSTALL_FONTS}
+${INSTALL_FONTS}:
+>	sudo ./scripts/install-fonts
+
+.PHONY: ${INSTALL_PLYMOUTH}
+${INSTALL_PLYMOUTH}:
+>	./scripts/install-plymouth
+
+.PHONY: ${INSTALL_PLYMOUTH_THEMES}
+${INSTALL_PLYMOUTH_THEMES}:
+>	sudo cp \
+		--recursive \
+		"./src/pop-basic" \
+		"/usr/share/plymouth/themes/pop-basic"
+
+>	sudo install \
+		--mode 755 \
+		"./src/plymouth-desktop-configs" \
+		"/usr/share/initramfs-tools/hooks"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

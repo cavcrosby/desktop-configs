@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# A initramfs-tools(7) hook script tailored to customizing the initramfs image.
+
+set -e
+
+. "/usr/share/initramfs-tools/hook-functions"
+
+# constants
+readonly PREREQ="plymouth"
+
+prereqs() {
+	printf '%s\n' "${PREREQ}"
+}
+
+case "$1" in
+	"prereqs")
+	    prereqs
+		exit 0
+		;;
+esac
+
+install \
+	-D \
+	--mode 644 \
+	--target-directory "${DESTDIR}/usr/share/fonts/opentype/fira" \
+	"/usr/share/fonts/opentype/fira/FiraSans-Regular.otf"
+
+fc-cache -s -y "${DESTDIR}" > "/dev/null" 2>&1
+rm "${DESTDIR}/usr/share/plymouth/themes/pop-basic/watermark.png"
+rm --recursive "${DESTDIR}/usr/share/plymouth/themes/text"

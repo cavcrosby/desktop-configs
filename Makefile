@@ -143,8 +143,8 @@ ${INSTALL_NSSWITCH_CONF}:
 
 .PHONY: ${INSTALL_RESOLVED_CONF}
 ${INSTALL_RESOLVED_CONF}:
->	sudo mkdir --parents "/etc/systemd/resolved.conf.d"
 >	sudo install \
+		-D \
 		--mode 644 \
 		"./src/resolved.conf" \
 		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"

@@ -13,7 +13,6 @@ if ! [ "$(command -v rclone)" ]; then
     exit 1
 fi
 
-mkdir --parents "${HOME}/.local/share/backgrounds"
 rclone copy \
     --include "6000x4000-unsplash-eberhardgross-OaXn4QRu-QQ.jpg" \
     --include "5472x3648-unsplash-eberhardgross-2gNx4aKQYvY.jpg" \

@@ -1,6 +1,6 @@
 Types: deb
 URIs: https://apt.releases.hashicorp.com/
-Suites: jammy
+Suites: trixie
 Components: main
 Signed-By:
  -----BEGIN PGP PUBLIC KEY BLOCK-----

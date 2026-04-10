@@ -31,6 +31,7 @@ INSTALL_WALLPAPERS = install-wallpapers
 INSTALL_FONTS = install-fonts
 INSTALL_PLYMOUTH = install-plymouth
 INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
+LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 CLEAN = clean
 
 # executables
@@ -40,10 +41,12 @@ PIP = pip
 PRE_COMMIT = pre-commit
 NPM = npm
 APPARMOR_PARSER = apparmor_parser
+DCONF = dconf
 executables = \
 	${PYTHON}\
 	${NPM}\
-	${APPARMOR_PARSER}
+	${APPARMOR_PARSER}\
+	${DCONF}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
@@ -77,6 +80,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_FONTS}                      - install the system text fonts'
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH}                   - install packages built from my maintained copy of Plymouth'
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH_THEMES}            - install my Plymouth themes'
+>	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -208,6 +212,12 @@ ${INSTALL_PLYMOUTH_THEMES}:
 		--mode 755 \
 		"./src/plymouth-desktop-configs" \
 		"/usr/share/initramfs-tools/hooks"
+
+.PHONY: ${LOAD_GNOME_TERMINAL_PROFILES}
+${LOAD_GNOME_TERMINAL_PROFILES}:
+>	${DCONF} load \
+		"/org/gnome/terminal/legacy/profiles:/" \
+		< "./src/gnome-terminal-profiles.txt"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

@@ -1,6 +1,6 @@
 Types: deb
-URIs: https://download.docker.com/linux/ubuntu
-Suites: jammy
+URIs: https://download.docker.com/linux/debian
+Suites: trixie
 Components: stable
 Architectures: amd64
 Signed-By:

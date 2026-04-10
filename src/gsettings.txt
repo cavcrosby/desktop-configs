@@ -113,6 +113,9 @@ org.gnome.shell.keybindings toggle-application-view ['<Super>a']
 org.gnome.shell.keybindings toggle-message-tray ['<Super>n']
 org.gnome.shell.keybindings toggle-overview ['<Super>d']
 org.gnome.shell.window-switcher current-workspace-only true
+org.gnome.software allow-updates false
+org.gnome.software download-updates false
+org.gnome.software download-updates-notify false
 org.gnome.system.location enabled false
 org.gtk.Settings.FileChooser clock-format '24h'
 org.gtk.Settings.FileChooser date-format 'regular'

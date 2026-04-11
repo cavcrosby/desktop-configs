@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# A grub-mkconfig helper script that populates the GNU GRand Unified Bootloader
+# (GRUB) config file.
+
+set -e
+
+printf '%s\n' "set menu_color_normal=light-gray/black"
+printf '%s\n' "set menu_color_highlight=black/light-gray"

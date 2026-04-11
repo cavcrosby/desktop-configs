@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Installs the GNU GRand Unified Bootloader (GRUB) configs.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+readonly ROOT_UID=0
+
+if [ "$(id --user)" != "${ROOT_UID}" ]; then
+    printf '%s: %s\n' "${PROGNAME}" "you must run this as root" >&2
+    exit 1
+fi
+
+install \
+	--mode 644 \
+	"./src/grub/grub-mkconfig" \
+	"/etc/default/grub.d/99_desktop-configs.cfg"
+
+if [ -r "./src/grub/grub-mkconfig.local" ]; then
+    install \
+        --mode 644 \
+        "./src/grub/grub-mkconfig.local" \
+        "/etc/default/grub.d/99_desktop-configs.local.cfg"
+fi
+
+install \
+	--mode 755 \
+	"./src/grub/99_desktop-configs" \
+	"/etc/grub.d/99_desktop-configs"
+
+update-grub

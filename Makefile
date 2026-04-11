@@ -32,6 +32,7 @@ INSTALL_FONTS = install-fonts
 INSTALL_PLYMOUTH = install-plymouth
 INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
+INSTALL_GRUB_CONFIGS = install-grub-configs
 CLEAN = clean
 
 # executables
@@ -79,6 +80,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH}                   - install packages built from my maintained copy of Plymouth'
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH_THEMES}            - install my Plymouth themes'
 >	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
+>	@printf '%s\n' '  ${INSTALL_GRUB_CONFIGS}               - install the GNU GRand Unified Bootloader configurations'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -216,6 +218,10 @@ ${LOAD_GNOME_TERMINAL_PROFILES}:
 >	dconf load \
 		"/org/gnome/terminal/legacy/profiles:/" \
 		< "./src/gnome-terminal-profiles.txt"
+
+.PHONY: ${INSTALL_GRUB_CONFIGS}
+${INSTALL_GRUB_CONFIGS}:
+>	sudo ./scripts/install-grub-configs
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

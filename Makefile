@@ -108,7 +108,7 @@ ${PRINT_DUPKEYBINDS}:
 
 .PHONY: ${INSTALL_GDM_CONFIGS}
 ${INSTALL_GDM_CONFIGS}:
->	sudo ./scripts/install-gdm-configs
+>	./scripts/install-gdm-configs
 
 .PHONY: ${INSTALL_VSCODE_WORKSPACES}
 ${INSTALL_VSCODE_WORKSPACES}:

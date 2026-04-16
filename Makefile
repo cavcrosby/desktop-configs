@@ -171,6 +171,11 @@ ${INSTALL_SYSTEMD_UNIT_FILES}:
 ${INSTALL_USER_ICON}:
 >	sudo install \
 		--mode 644 \
+		"./src/user-accountsservice" \
+		"/var/lib/AccountsService/users/$${LOGNAME}"
+
+>	sudo install \
+		--mode 644 \
 		"./src/user-icon" \
 		"/var/lib/AccountsService/icons/$${LOGNAME}"
 

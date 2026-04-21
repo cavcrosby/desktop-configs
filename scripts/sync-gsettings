@@ -15,9 +15,61 @@ if ! [ "$(command -v gsettings)" ]; then
 fi
 
 temp_file_path="$(mktemp)"
+exts_path="${HOME}/.local/share/gnome-shell/extensions"
+mkdir --parents "${exts_path}"
 while read -r schema key value; do
-    if ! current_value="$(gsettings get "${schema}" "${key}" 2>&1)"; then
-        printf "%s: %s\n" "${PROGNAME}" "${current_value}" >&2
+    schemadir_path="/usr/share/glib-2.0/schemas"
+    if printf \
+        '%s\n' \
+        "${schema}" \
+        | grep --quiet "org.gnome.shell.extensions" \
+    ; then
+        if ext_path="$(find "${exts_path}" -name "${schema##*.}@*")" \
+            && [ "${ext_path}" ] \
+        ; then
+            schemadir_path="${ext_path}/schemas"
+        fi
+
+        ext_path="${exts_path}/just-perfection-desktop@just-perfection"
+        if  [ \
+                "${schema}" = "org.gnome.shell.extensions.just-perfection" \
+            ] \
+            && \
+            [ \
+                -d "${ext_path}" \
+            ] \
+        ; then
+            schemadir_path="${ext_path}/schemas"
+        fi
+
+        ext_path="${exts_path}/appindicatorsupport@rgcjonas.gmail.com"
+        if  [ \
+                "${schema}" = "org.gnome.shell.extensions.appindicator" \
+            ] \
+            && \
+            [ \
+                -d "${ext_path}" \
+            ] \
+        ; then
+            schemadir_path="${ext_path}/schemas"
+        fi
+    fi
+
+    if ! current_value="$(\
+        gsettings \
+            --schemadir "${schemadir_path}" \
+            get \
+            "${schema}" \
+            "${key}" \
+            2>&1 \
+    )"; then
+        printf \
+            "%s: %s %s %s\n" \
+            "${PROGNAME}" \
+            "${schema}" \
+            "${key}" \
+            "${current_value}" \
+            >&2
     elif [ "${current_value}" != "${value}" ]; then
         value="${current_value}"
     fi

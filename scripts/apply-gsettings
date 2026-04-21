@@ -12,8 +12,39 @@ readonly PROGNAME
 apply_gsettings() {
     local gsettings_file_path="$1"
     while read -r schema key value; do
-        if ! err="$(gsettings set "${schema}" "${key}" "${value}" 2>&1)"; then
-            printf "%s: %s %s %s\n" "${PROGNAME}" "${schema}" "${key}" "${err}" >&2
+        schemadir_path="/usr/share/glib-2.0/schemas"
+        if printf \
+            '%s\n' \
+            "${schema}" \
+            | grep --quiet "org.gnome.shell.extensions" \
+        ; then
+            if ext_path="$(\
+                find \
+                    "${HOME}/.local/share/gnome-shell/extensions" \
+                    -iname "${schema##*\.}@*" \
+                )" \
+                && [ "${ext_path}" ] \
+            ; then
+                schemadir_path="${ext_path}/schemas"
+            fi
+        fi
+
+        if ! err="$(\
+            gsettings \
+                --schemadir "${schemadir_path}" \
+                set \
+                "${schema}" \
+                "${key}" \
+                "${value}" \
+                2>&1 \
+        )"; then
+            printf \
+                "%s: %s %s %s\n" \
+                "${PROGNAME}" \
+                "${schema}" \
+                "${key}" \
+                "${err}" \
+                >&2
         fi
     done < "${gsettings_file_path}"
 }

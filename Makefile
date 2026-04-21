@@ -33,6 +33,7 @@ INSTALL_PLYMOUTH = install-plymouth
 INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 INSTALL_GRUB_CONFIGS = install-grub-configs
+INSTALL_NICE_TO_HAVES = install-nice-to-haves
 CLEAN = clean
 
 # executables
@@ -81,6 +82,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH_THEMES}            - install my Plymouth themes'
 >	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
 >	@printf '%s\n' '  ${INSTALL_GRUB_CONFIGS}               - install the GNU GRand Unified Bootloader configurations'
+>	@printf '%s\n' '  ${INSTALL_NICE_TO_HAVES}              - install nice-to-have, small quality of life packages'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -227,6 +229,15 @@ ${LOAD_GNOME_TERMINAL_PROFILES}:
 .PHONY: ${INSTALL_GRUB_CONFIGS}
 ${INSTALL_GRUB_CONFIGS}:
 >	sudo ./scripts/install-grub-configs
+
+.PHONY: ${INSTALL_NICE_TO_HAVES}
+${INSTALL_NICE_TO_HAVES}:
+>	sudo apt-get install \
+		--assume-yes \
+		"colortest" \
+		"command-not-found" \
+		"dconf-editor" \
+		"fastfetch"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

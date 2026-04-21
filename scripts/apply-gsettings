@@ -11,9 +11,62 @@ readonly PROGNAME
 
 apply_gsettings() {
     local gsettings_file_path="$1"
+    exts_path="${HOME}/.local/share/gnome-shell/extensions"
+    mkdir --parents "${exts_path}"
     while read -r schema key value; do
-        if ! err="$(gsettings set "${schema}" "${key}" "${value}" 2>&1)"; then
-            printf "%s: %s %s %s\n" "${PROGNAME}" "${schema}" "${key}" "${err}" >&2
+        schemadir_path="/usr/share/glib-2.0/schemas"
+        if printf \
+            '%s\n' \
+            "${schema}" \
+            | grep --quiet "org.gnome.shell.extensions" \
+        ; then
+            if ext_path="$(find "${exts_path}" -name "${schema##*.}@*")" \
+                && [ "${ext_path}" ] \
+            ; then
+                schemadir_path="${ext_path}/schemas"
+            fi
+
+            ext_path="${exts_path}/just-perfection-desktop@just-perfection"
+            if  [ \
+                    "${schema}" = "org.gnome.shell.extensions.just-perfection" \
+                ] \
+                && \
+                [ \
+                    -d "${ext_path}" \
+                ] \
+            ; then
+                schemadir_path="${ext_path}/schemas"
+            fi
+
+            ext_path="${exts_path}/appindicatorsupport@rgcjonas.gmail.com"
+            if  [ \
+                    "${schema}" = "org.gnome.shell.extensions.appindicator" \
+                ] \
+                && \
+                [ \
+                    -d "${ext_path}" \
+                ] \
+            ; then
+                schemadir_path="${ext_path}/schemas"
+            fi
+        fi
+
+        if ! err="$(\
+            gsettings \
+                --schemadir "${schemadir_path}" \
+                set \
+                "${schema}" \
+                "${key}" \
+                "${value}" \
+                2>&1 \
+        )"; then
+            printf \
+                "%s: %s %s %s\n" \
+                "${PROGNAME}" \
+                "${schema}" \
+                "${key}" \
+                "${err}" \
+                >&2
         fi
     done < "${gsettings_file_path}"
 }

@@ -34,6 +34,7 @@ INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 INSTALL_GRUB_CONFIGS = install-grub-configs
 INSTALL_NICE_TO_HAVES = install-nice-to-haves
+SERVE_PRESEED_CONFIG = serve-preseed-config
 CLEAN = clean
 
 # executables
@@ -83,6 +84,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
 >	@printf '%s\n' '  ${INSTALL_GRUB_CONFIGS}               - install the GNU GRand Unified Bootloader configurations'
 >	@printf '%s\n' '  ${INSTALL_NICE_TO_HAVES}              - install nice-to-have, small quality of life packages'
+>	@printf '%s\n' '  ${SERVE_PRESEED_CONFIG}               - serve the Debian preseed configuration file over HTTP'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -239,6 +241,23 @@ ${INSTALL_NICE_TO_HAVES}:
 		"dconf-editor" \
 		"fastfetch"
 
+# - ENCRYPTED_PASSWORD = Passw0rd!
+# - d-i partman/early_command string debconf-set partman-auto/disk $$(readlink -f /dev/disk/by-id/${DISK_ID})
+#   - replace ${DISK_ID} with something like nvme-WD_BLACK_SN850X_HS_2000GB_25244C800799
+.PHONY: ${SERVE_PRESEED_CONFIG}
+${SERVE_PRESEED_CONFIG}: local_config_files_vars = \
+							$${HOSTNAME_}\
+							$${ENCRYPTED_PASSWORD}\
+							$${PARTMAN_AUTO_DISK_PARAM_LINE}\
+							$${ENCRYPTION_PASSPHRASE}
+${SERVE_PRESEED_CONFIG}: export HOSTNAME_ = debian
+${SERVE_PRESEED_CONFIG}: export ENCRYPTED_PASSWORD = $$6$$496388125$$lkA4dPUIN/ueRva.PE3bfRTsq6DRKUw7Ir02VygOih9ufg2.SI.4c9L2xOEh4qgGojD3x1NttO8Fu6WygqxII/
+${SERVE_PRESEED_CONFIG}: export PARTMAN_AUTO_DISK_PARAM_LINE = d-i partman-auto/disk string /dev/vda
+${SERVE_PRESEED_CONFIG}: export ENCRYPTION_PASSPHRASE = Passw0rd!
+${SERVE_PRESEED_CONFIG}: ./src/preseed.cfg
+${SERVE_PRESEED_CONFIG}:
+>	${PYTHON} -m "http.server" --directory "./src"
+
 .PHONY: ${CLEAN}
 ${CLEAN}:
 >	rm \
@@ -246,7 +265,8 @@ ${CLEAN}:
 		"./src/bookmarks" \
 		"./src/firefox/1m544c8z.default-release/user.js" \
 		"./src/systemd/sendmail@.service" \
-		"./src/wallpapers.xml"
+		"./src/wallpapers.xml" \
+		"./src/preseed.cfg"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

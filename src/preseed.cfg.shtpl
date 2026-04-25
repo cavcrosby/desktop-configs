@@ -1,0 +1,65 @@
+#_preseed_V1
+d-i debian-installer/language string en
+d-i debian-installer/country string US
+d-i debian-installer/locale string en_US.UTF-8
+d-i keyboard-configuration/xkb-keymap select us
+d-i netcfg/get_hostname string ${HOSTNAME_}
+d-i netcfg/get_domain string
+d-i netcfg/wireless_wep string
+d-i mirror/country string manual
+d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+d-i passwd/root-login boolean false
+d-i passwd/user-fullname string Conner Crosby
+d-i passwd/username string conner
+d-i passwd/user-password-crypted password ${ENCRYPTED_PASSWORD}
+d-i clock-setup/utc boolean true
+d-i time/zone string America/New_York
+d-i clock-setup/ntp boolean true
+${PARTMAN_AUTO_DISK_PARAM_LINE}
+d-i partman-auto/method string crypto
+d-i partman-auto-lvm/guided_size string max
+d-i partman-auto-lvm/new_vg_name string vgos
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+partman-auto-lvm partman-auto-lvm/no_boot boolean true
+d-i partman-crypto/passphrase password ${ENCRYPTION_PASSPHRASE}
+d-i partman-crypto/passphrase-again password ${ENCRYPTION_PASSPHRASE}
+d-i partman-auto-crypto/erase_disks boolean false
+# -1 indicates unlimited partition size
+d-i partman-auto/expert_recipe string \
+crypto :: \
+    1024 1024 1024 free \
+        $iflabel{ gpt } method{ efi } \
+        format{ } \
+    . \
+    200% 2048 20480 linux-swap \
+        $lvmok{ } lv_name{ lvswap } \
+        in_vg { vgos } method{ swap } \
+        format{ } \
+    . \
+    10240 10240 -1 ext4 \
+        $lvmok{ } lv_name{ lvroot } \
+        in_vg { vgos } method{ format } \
+        format{ } use_filesystem{ } \
+        filesystem{ ext4 } mountpoint{ / } \
+    .
+
+d-i partman-partitioning/choose_label select gpt
+d-i partman-partitioning/default_label string gpt
+d-i partman-md/confirm boolean true
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i apt-setup/cdrom/set-first boolean false
+d-i apt-setup/services-select multiselect security, updates
+d-i apt-setup/security_host string security.debian.org
+tasksel tasksel/first multiselect standard, ssh-server, gnome-desktop
+popularity-contest popularity-contest/participate boolean true
+grub-installer grub-installer/skip boolean true
+systemd-boot-installer systemd-boot-installer/skip boolean false
+systemd-boot-installer systemd-boot-installer/tries select 2
+d-i finish-install/reboot_in_progress note

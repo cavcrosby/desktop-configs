@@ -3,6 +3,7 @@ node_modules/
 /src/gsettings.txt.local
 /src/bookmarks
 /src/wallpapers.xml
+/src/preseed.cfg
 /src/firefox/1m544c8z.default-release/user.js
 /src/systemd/sendmail@.service
 /src/gdm/00-desktop-configs.local

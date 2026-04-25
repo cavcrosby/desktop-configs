@@ -32,7 +32,6 @@ INSTALL_FONTS = install-fonts
 INSTALL_PLYMOUTH = install-plymouth
 INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
-INSTALL_GRUB_CONFIGS = install-grub-configs
 INSTALL_NICE_TO_HAVES = install-nice-to-haves
 SERVE_PRESEED_CONFIG = serve-preseed-config
 CLEAN = clean
@@ -82,7 +81,6 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH}                   - install packages built from my maintained copy of Plymouth'
 >	@printf '%s\n' '  ${INSTALL_PLYMOUTH_THEMES}            - install my Plymouth themes'
 >	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
->	@printf '%s\n' '  ${INSTALL_GRUB_CONFIGS}               - install the GNU GRand Unified Bootloader configurations'
 >	@printf '%s\n' '  ${INSTALL_NICE_TO_HAVES}              - install nice-to-have, small quality of life packages'
 >	@printf '%s\n' '  ${SERVE_PRESEED_CONFIG}               - serve the Debian preseed configuration file over HTTP'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
@@ -227,10 +225,6 @@ ${LOAD_GNOME_TERMINAL_PROFILES}:
 >	dconf load \
 		"/org/gnome/terminal/legacy/profiles:/" \
 		< "./src/gnome-terminal-profiles.txt"
-
-.PHONY: ${INSTALL_GRUB_CONFIGS}
-${INSTALL_GRUB_CONFIGS}:
->	sudo ./scripts/install-grub-configs
 
 .PHONY: ${INSTALL_NICE_TO_HAVES}
 ${INSTALL_NICE_TO_HAVES}:

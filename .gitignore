@@ -7,5 +7,4 @@ node_modules/
 /src/firefox/1m544c8z.default-release/user.js
 /src/systemd/sendmail@.service
 /src/gdm/00-desktop-configs.local
-/src/grub/grub-mkconfig.local
 /src/gdm/greeter.dconf-defaults.local

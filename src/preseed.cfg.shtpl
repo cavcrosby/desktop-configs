@@ -31,16 +31,16 @@ d-i partman-auto-crypto/erase_disks boolean false
 # -1 indicates unlimited partition size
 d-i partman-auto/expert_recipe string \
 crypto :: \
-    1024 1024 1024 free \
+    1000 1000 1000 free \
         $iflabel{ gpt } method{ efi } \
         format{ } \
     . \
-    200% 2048 20480 linux-swap \
+    200% 2000 20000 linux-swap \
         $lvmok{ } lv_name{ lvswap } \
         in_vg { vgos } method{ swap } \
         format{ } \
     . \
-    10240 10240 -1 ext4 \
+    10000 10000 -1 ext4 \
         $lvmok{ } lv_name{ lvroot } \
         in_vg { vgos } method{ format } \
         format{ } use_filesystem{ } \

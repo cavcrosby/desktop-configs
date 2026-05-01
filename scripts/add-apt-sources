@@ -26,6 +26,14 @@ install --mode 644 "./src/apt/opentofu.sources" "/etc/apt/sources.list.d"
 install --mode 644 "./src/apt/opentofu.gpg" "/etc/apt/keyrings"
 install --mode 644 "./src/apt/opentofu-repo.gpg" "/etc/apt/keyrings"
 
+find \
+    "./src/apt" \
+    -name "*.sources.local" \
+    -exec sh -c '\
+        local_file="${1#./src/apt/}";
+        install --mode 644 "$1" "/etc/apt/sources.list.d/${local_file%.local}"
+    ' "$0" "{}" ";"
+
 apt-get update
 
 exit 0

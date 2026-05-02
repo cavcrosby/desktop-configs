@@ -34,6 +34,7 @@ INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 INSTALL_NICE_TO_HAVES = install-nice-to-haves
 SERVE_PRESEED_CONFIG = serve-preseed-config
+INSTALL_KERNEL_CMDLINE = install-kernel-cmdline
 CLEAN = clean
 
 # executables
@@ -45,12 +46,14 @@ NPM = npm
 APPARMOR_PARSER = apparmor_parser
 DCONF = dconf
 APT_GET = apt-get
+FINDMNT = findmnt
 executables = \
 	${PYTHON}\
 	${NPM}\
 	${APPARMOR_PARSER}\
 	${DCONF}\
-	${APT_GET}
+	${APT_GET}\
+	${FINDMNT}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
@@ -87,6 +90,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${LOAD_GNOME_TERMINAL_PROFILES}       - load the GNOME Terminal profiles'
 >	@printf '%s\n' '  ${INSTALL_NICE_TO_HAVES}              - install nice-to-have, small quality of life packages'
 >	@printf '%s\n' '  ${SERVE_PRESEED_CONFIG}               - serve the Debian preseed configuration file over HTTP'
+>	@printf '%s\n' '  ${INSTALL_KERNEL_CMDLINE}             - install the kernel boot arguments configuration file'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -256,6 +260,14 @@ ${SERVE_PRESEED_CONFIG}: ./src/preseed.cfg
 ${SERVE_PRESEED_CONFIG}:
 >	${PYTHON} -m "http.server" --directory "./src"
 
+.PHONY: ${INSTALL_KERNEL_CMDLINE}
+${INSTALL_KERNEL_CMDLINE}: local_config_files_vars = \
+							$${ROOT_FILESYSTEM_UUID}
+${INSTALL_KERNEL_CMDLINE}: export ROOT_FILESYSTEM_UUID = $(shell ${FINDMNT} --noheadings --output "UUID" "/")
+${INSTALL_KERNEL_CMDLINE}: ./src/cmdline
+${INSTALL_KERNEL_CMDLINE}:
+>	sudo ./scripts/install-kernel-cmdline
+
 .PHONY: ${CLEAN}
 ${CLEAN}:
 >	rm \
@@ -264,7 +276,8 @@ ${CLEAN}:
 		"./src/firefox/1m544c8z.default-release/user.js" \
 		"./src/systemd/sendmail@.service" \
 		"./src/wallpapers.xml" \
-		"./src/preseed.cfg"
+		"./src/preseed.cfg" \
+		"./src/cmdline"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

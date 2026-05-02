@@ -1,0 +1,1 @@
+root=UUID=${ROOT_FILESYSTEM_UUID} quiet splash

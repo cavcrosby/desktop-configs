@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Installs the kernel boot arguments configuration file.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+readonly ROOT_UID=0
+
+if [ "$(id --user)" != "${ROOT_UID}" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "you must run this as root" >&2
+    exit 1
+fi
+
+install --mode 644 "./src/cmdline" "/etc/kernel/cmdline"
+if [ -r "./src/cmdline.local" ]; then
+    while read -r line && read -r local_line <&3; do
+        printf '%s %s\n' "${line}" "${local_line}" > "/etc/kernel/cmdline"
+    done < "./src/cmdline" 3< "./src/cmdline.local"
+fi
+
+find \
+    "/boot" \
+    -maxdepth 1 \
+    -name "vmlinuz-*" \
+    -exec sh -c 'kernel-install add "${1#/boot/vmlinuz-}" "$1"' "$0" "{}" ";"

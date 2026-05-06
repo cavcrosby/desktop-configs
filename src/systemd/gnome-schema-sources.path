@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch the GNOME schema sources
+
+[Path]
+PathChanged=%h/.local/share/gnome-shell/extensions
+Unit=update-compiled-schemas.service
+
+[Install]
+WantedBy=paths.target

@@ -170,10 +170,6 @@ ${INSTALL_RESOLVED_CONF}:
 		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"
 
 .PHONY: ${INSTALL_SYSTEMD_UNIT_FILES}
-${INSTALL_SYSTEMD_UNIT_FILES}: local_config_files_vars = \
-								$${SYSTEMD_SENDMAIL_SCRIPT_PATH}
-${INSTALL_SYSTEMD_UNIT_FILES}: export SYSTEMD_SENDMAIL_SCRIPT_PATH = ${HOME}/.local/libexec/systemd/sendmail
-${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/sendmail@.service
 ${INSTALL_SYSTEMD_UNIT_FILES}:
 >	./scripts/install-systemd-unit-files
 
@@ -274,7 +270,6 @@ ${CLEAN}:
 		--force \
 		"./src/bookmarks" \
 		"./src/firefox/1m544c8z.default-release/user.js" \
-		"./src/systemd/sendmail@.service" \
 		"./src/wallpapers.xml" \
 		"./src/preseed.cfg" \
 		"./src/cmdline"

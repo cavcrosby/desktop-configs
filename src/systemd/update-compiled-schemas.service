@@ -1,0 +1,6 @@
+[Unit]
+Description=Update the GNOME compiled schemas
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/libexec/systemd/update-compiled-schemas

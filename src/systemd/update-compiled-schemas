@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Updates the compiled schemas from GSettings XML schema files.
+
+set -eo pipefail
+
+# constants
+readonly SCHEMADIR_PATH="${HOME}/.local/share/glib-2.0/schemas"
+mkdir --parents "${SCHEMADIR_PATH}"
+
+find "${HOME}/.local/share/gnome-shell/extensions" -type "l" -delete
+find \
+    "${HOME}/.local/share/gnome-shell/extensions" \
+    -type "f" \
+    -name "*.gschema.xml" \
+    -exec sh -c '\
+        ln --symbolic --force "$1" "$2/${1##*/}"
+    ' "$0" "{}" "${SCHEMADIR_PATH}" ";"
+
+glib-compile-schemas "${SCHEMADIR_PATH}"
+
+exit 0

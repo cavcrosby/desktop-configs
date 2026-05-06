@@ -7,7 +7,7 @@ set -eo pipefail
 mkdir \
     --parents \
     "${HOME}/.config/systemd/user" \
-    "$(dirname "${SYSTEMD_SENDMAIL_SCRIPT_PATH}")"
+    "${HOME}/.local/libexec/systemd"
 
 install --mode 644 "./src/systemd/hourly@.timer" "${HOME}/.config/systemd/user"
 install \
@@ -30,10 +30,21 @@ install \
     "./src/systemd/sendmail@.service" \
     "${HOME}/.config/systemd/user"
 
+install --mode 755 "./src/systemd/sendmail" "${HOME}/.local/libexec/systemd"
+install \
+    --mode 644 \
+    "./src/systemd/gnome-schema-sources.path" \
+    "${HOME}/.config/systemd/user"
+
+install \
+    --mode 644 \
+    "./src/systemd/update-compiled-schemas.service" \
+    "${HOME}/.config/systemd/user"
+
 install \
     --mode 755 \
-    "./src/systemd/sendmail" \
-    "${SYSTEMD_SENDMAIL_SCRIPT_PATH}"
+    "./src/systemd/update-compiled-schemas" \
+    "${HOME}/.local/libexec/systemd"
 
 systemctl daemon-reload --user
 systemctl enable --user "hourly@rclone-amazon-music.timer"
@@ -44,5 +55,8 @@ systemctl start --user "hourly@rclone-books.timer"
 
 systemctl enable --user "hourly@rclone-google-music.timer"
 systemctl start --user "hourly@rclone-google-music.timer"
+
+systemctl enable --user "gnome-schema-sources.path"
+systemctl start --user "gnome-schema-sources.path"
 
 exit 0

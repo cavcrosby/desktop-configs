@@ -35,6 +35,7 @@ LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 INSTALL_NICE_TO_HAVES = install-nice-to-haves
 SERVE_PRESEED_CONFIG = serve-preseed-config
 INSTALL_KERNEL_CMDLINE = install-kernel-cmdline
+INSTALL_NVIDIA_OPTIONS_CONF = install-nvidia-options-conf
 CLEAN = clean
 
 # executables
@@ -91,6 +92,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_NICE_TO_HAVES}              - install nice-to-have, small quality of life packages'
 >	@printf '%s\n' '  ${SERVE_PRESEED_CONFIG}               - serve the Debian preseed configuration file over HTTP'
 >	@printf '%s\n' '  ${INSTALL_KERNEL_CMDLINE}             - install the kernel boot arguments configuration file'
+>	@printf '%s\n' '  ${INSTALL_NVIDIA_OPTIONS_CONF}        - install the NVIDIA modprobe options configuration file'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -263,6 +265,10 @@ ${INSTALL_KERNEL_CMDLINE}: export ROOT_FILESYSTEM_UUID = $(shell ${FINDMNT} --no
 ${INSTALL_KERNEL_CMDLINE}: ./src/cmdline
 ${INSTALL_KERNEL_CMDLINE}:
 >	sudo ./scripts/install-kernel-cmdline
+
+.PHONY: ${INSTALL_NVIDIA_OPTIONS_CONF}
+${INSTALL_NVIDIA_OPTIONS_CONF}:
+>	sudo install --mode 644 "./src/nvidia-options.conf" "/etc/nvidia/current"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:

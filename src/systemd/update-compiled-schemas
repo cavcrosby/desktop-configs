@@ -10,6 +10,13 @@ mkdir --parents "${SCHEMADIR_PATH}"
 
 find "${HOME}/.local/share/gnome-shell/extensions" -type "l" -delete
 find \
+    "/usr/share/glib-2.0/schemas" \
+    -type "f" \
+    -exec sh -c '\
+        ln --symbolic --force "$1" "$2/${1##*/}"
+    ' "$0" "{}" "${SCHEMADIR_PATH}" ";"
+
+find \
     "${HOME}/.local/share/gnome-shell/extensions" \
     -type "f" \
     -name "*.gschema.xml" \

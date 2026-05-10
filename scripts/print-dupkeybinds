@@ -11,8 +11,9 @@ SCHEMAS=(
     "org.gnome.desktop.wm.keybindings"
     "org.gnome.mutter.keybindings"
     "org.gnome.mutter.wayland.keybindings"
-    "org.gnome.shell.keybindings"
     "org.gnome.settings-daemon.plugins.media-keys"
+    "org.gnome.shell.extensions.gnome-mosaic"
+    "org.gnome.shell.keybindings"
 )
 
 if ! [ "$(command -v gsettings)" ]; then
@@ -24,7 +25,20 @@ temp_file_path="$(mktemp)"
 for schema in "${SCHEMAS[@]}"; do
     while read -r key; do
         value="$(gsettings get "${schema}" "${key}")"
-        if [ "${value}" != '@as []' ]; then
+        if  [ \
+                "$(\
+                    gsettings range \
+                        "${schema}" \
+                        "${key}" \
+                )" \
+                = "type as" \
+            ] \
+            && [ \
+                "${value}" \
+                != \
+                '@as []' \
+            ] \
+        ; then
             # parses keybindings to loop over by mangling the following:
             #   - ['
             #   - ', '

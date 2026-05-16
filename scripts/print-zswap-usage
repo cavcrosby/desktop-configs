@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Prints custom metrics about the zswap kernel module's runtime.
+
+set -eo pipefail
+
+# constants
+PROGNAME="$(basename "$0")"
+readonly PROGNAME
+
+if ! [ "$(command -v bc)" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "bc cannot be found in the PATH!" >&2
+    exit 1
+fi
+
+read -r max_pool_percent < "/sys/module/zswap/parameters/max_pool_percent"
+read -r stored_pages <<< "$(sudo cat "/sys/kernel/debug/zswap/stored_pages")"
+read -r pool_total_size <<< "$(sudo cat "/sys/kernel/debug/zswap/pool_total_size")"
+if [ "${pool_total_size}" -eq 0 ]; then
+    pool_total_size=1
+fi
+
+memtotal="$(awk '/MemTotal/ { print $2 }' "/proc/meminfo")"
+max_pool_bytes="$(\
+    printf \
+        "%s\n" \
+        "${memtotal} * 1024 * .${max_pool_percent}" \
+        | bc \
+)"
+
+printf \
+    "%s: %.2f:1\n" \
+    "Compression ratio" \
+    "$(\
+        printf \
+            "%s\n" \
+            "scale=2; ${stored_pages} * $(getconf PAGESIZE) / ${pool_total_size}" \
+        | bc \
+    )"
+
+printf \
+    "%s: %.2f%%\n" \
+    "Used pool" \
+    "$(\
+        printf \
+            "%s\n" \
+            "scale=4; ${pool_total_size} / ${max_pool_bytes} * 100;" \
+        | bc \
+    )"
+
+printf \
+    "%s: %sMiB\n" \
+    "Max pool size" \
+    "$(printf "%s\n" "${memtotal} / 1024 * .${max_pool_percent}" | bc)"
+
+printf "%s\n" "Parameter values:"
+for line in $(sudo grep --recursive "." "/sys/module/zswap/parameters"); do
+    printf -- "- %s\n" "${line}"
+done
+
+printf "%s\n" "Debug values:"
+for line in $(sudo grep --recursive "." "/sys/kernel/debug/zswap"); do
+    printf -- "- %s\n" "${line}"
+done

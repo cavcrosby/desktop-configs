@@ -36,6 +36,7 @@ INSTALL_NICE_TO_HAVES = install-nice-to-haves
 SERVE_PRESEED_CONFIG = serve-preseed-config
 INSTALL_KERNEL_CMDLINE = install-kernel-cmdline
 INSTALL_NVIDIA_OPTIONS_CONF = install-nvidia-options-conf
+PRINT_ZSWAP_USAGE = print-zswap-usage
 CLEAN = clean
 
 # executables
@@ -93,6 +94,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${SERVE_PRESEED_CONFIG}               - serve the Debian preseed configuration file over HTTP'
 >	@printf '%s\n' '  ${INSTALL_KERNEL_CMDLINE}             - install the kernel boot arguments configuration file'
 >	@printf '%s\n' '  ${INSTALL_NVIDIA_OPTIONS_CONF}        - install the NVIDIA modprobe options configuration file'
+>	@printf '%s\n' '  ${PRINT_ZSWAP_USAGE}                  - prints metrics about zswap kernel module'\''s runtime'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -172,6 +174,10 @@ ${INSTALL_RESOLVED_CONF}:
 		"/etc/systemd/resolved.conf.d/00-desktop-configs.conf"
 
 .PHONY: ${INSTALL_SYSTEMD_UNIT_FILES}
+${INSTALL_SYSTEMD_UNIT_FILES}: local_config_files_vars = \
+								$${MAX_POOL_PERCENT}
+${INSTALL_SYSTEMD_UNIT_FILES}: export MAX_POOL_PERCENT = $(shell ./scripts/calc-max-pool-percent)
+${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/configure-zswap.service
 ${INSTALL_SYSTEMD_UNIT_FILES}:
 >	./scripts/install-systemd-unit-files
 
@@ -270,6 +276,10 @@ ${INSTALL_KERNEL_CMDLINE}:
 ${INSTALL_NVIDIA_OPTIONS_CONF}:
 >	sudo install --mode 644 "./src/nvidia-options.conf" "/etc/nvidia/current"
 
+.PHONY: ${PRINT_ZSWAP_USAGE}
+${PRINT_ZSWAP_USAGE}:
+>	./scripts/print-zswap-usage
+
 .PHONY: ${CLEAN}
 ${CLEAN}:
 >	rm \
@@ -278,7 +288,8 @@ ${CLEAN}:
 		"./src/firefox/1m544c8z.default-release/user.js" \
 		"./src/wallpapers.xml" \
 		"./src/preseed.cfg" \
-		"./src/cmdline"
+		"./src/cmdline" \
+		"./src/systemd/configure-zswap.service"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

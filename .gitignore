@@ -9,3 +9,4 @@ node_modules/
 /src/firefox/1m544c8z.default-release/user.js
 /src/gdm/00-desktop-configs.local
 /src/gdm/greeter.dconf-defaults.local
+/src/systemd/configure-zswap.service

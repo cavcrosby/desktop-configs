@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Prints custom metrics about the zswap kernel module's runtime.
+
+set -eo pipefail
+
+read -r max_pool_percent < "/sys/module/zswap/parameters/max_pool_percent"
+read -r stored_pages <<< "$(sudo cat "/sys/kernel/debug/zswap/stored_pages")"
+read -r pool_total_size <<< "$(sudo cat "/sys/kernel/debug/zswap/pool_total_size")"
+if [ "${pool_total_size}" -eq 0 ]; then
+    pool_total_size=1
+fi
+
+memtotal="$(awk '/MemTotal/ { print $2 }' "/proc/meminfo")"
+max_pool_bytes="$(\
+    printf \
+        "%i .%i\n" \
+        "${memtotal}" \
+        "${max_pool_percent}" \
+        | awk '{ printf "%.0f\n", $1 * 1024 * $2 }'
+)"
+
+printf \
+    "%i %i %i\n" \
+    "${stored_pages}" \
+    "$(getconf PAGESIZE)" \
+    "${pool_total_size}" \
+    | awk '{ printf "%s: %.2f:1\n", "Compression ratio", $1 * $2 / $3 }'
+
+printf \
+    "%i %i\n" \
+    "${pool_total_size}" \
+    "${max_pool_bytes}" \
+    | awk '{ printf "%s: %.2f%%\n", "Used pool", $1 / $2 * 100 }'
+
+printf \
+    "%i .%i\n" \
+    "${memtotal}" \
+    "${max_pool_percent}" \
+    | awk '{ printf "%s: %iMiB\n", "Max pool size", $1 / 1024 * $2 }'
+
+printf "%s\n" "Parameter values:"
+for line in $(sudo grep --recursive "." "/sys/module/zswap/parameters"); do
+    printf -- "- %s\n" "${line}"
+done
+
+printf "%s\n" "Debug values:"
+for line in $(sudo grep --recursive "." "/sys/kernel/debug/zswap"); do
+    printf -- "- %s\n" "${line}"
+done

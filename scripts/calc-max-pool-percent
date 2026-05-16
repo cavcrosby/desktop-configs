@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# Calculates the max pool percent for the zswap kernel module's
+# max_pool_percent parameter.
+
+set -eo pipefail
+
+memtotal="$(awk '/MemTotal/ { print $2 }' "/proc/meminfo")"
+max_pool_percent=66
+sixteen_gib=17179869184
+
+# Calculates the amount of system RAM that the zswap kernel module can grow
+# into, which is known as the pool size. The memtotal variable is in kibibytes
+# (KiB) and is converted to bytes. One kibibyte in bytes is 1024 bytes to the
+# power of one (power of zero is a byte).
+max_pool_bytes="$(\
+    printf \
+        "%i .%i\n" \
+        "${memtotal}" \
+        "${max_pool_percent}" \
+        | awk '{ printf "%.0f\n", $1 * 1024 * $2 }'
+)"
+
+if [ "${max_pool_bytes}" -ge "${sixteen_gib}" ]; then
+    # Calculates the max pool percent for the pool size to be around 16
+    # gibibytes (GiB).
+    max_pool_percent="$(\
+        printf \
+            "%i %i\n" \
+            "${sixteen_gib}" \
+            "${memtotal}" \
+            | awk '{ printf "%i\n", $1 / ($2 * 1024) * 100 }'
+    )"
+fi
+
+printf "%i\n" "${max_pool_percent}"
+
+exit 0

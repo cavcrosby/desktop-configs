@@ -32,7 +32,7 @@ crypto :: \
         $iflabel{ gpt } method{ efi } \
         format{ } \
     . \
-    200% 2000 20000 linux-swap \
+    4300 4300 4300 linux-swap \
         $lvmok{ } lv_name{ lvswap } \
         in_vg { vgos } method{ swap } \
         format{ } \

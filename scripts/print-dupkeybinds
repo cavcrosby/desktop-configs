@@ -12,7 +12,7 @@ SCHEMAS=(
     "org.gnome.mutter.keybindings"
     "org.gnome.mutter.wayland.keybindings"
     "org.gnome.settings-daemon.plugins.media-keys"
-    "org.gnome.shell.extensions.gnome-mosaic"
+    "org.gnome.shell.extensions.tilingshell"
     "org.gnome.shell.keybindings"
 )
 

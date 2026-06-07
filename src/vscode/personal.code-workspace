@@ -32,6 +32,12 @@
             "path": "./plymouth"
         },
         {
+            "path": "./shellcheck"
+        },
+        {
+            "path": "./shellcheck-precommit"
+        },
+        {
             "path": "./vscode-settings"
         },
         {

@@ -10,11 +10,11 @@ readonly PROGNAME
 
 set_location_icon() {
     local location_path="$1"
-    local icon_path="$2"
+    local icon_name="$2"
     if ! gio set \
         "${location_path}" \
-        "metadata::custom-icon" \
-        "file://${icon_path}" 2> "/dev/null"; then
+        "metadata::custom-icon-name" \
+        "${icon_name}" 2> "/dev/null"; then
             printf \
                 '%s: %s\n' \
                 "${PROGNAME}" \
@@ -39,16 +39,8 @@ if ! printf '%s' "${icon_theme}" | grep --quiet "Papirus"; then
     exit 1
 fi
 
-set_location_icon \
-    "${HOME}/git" \
-    "/usr/share/icons/${icon_theme}/64x64/places/folder-git.svg"
-
-set_location_icon \
-    "${HOME}/src" \
-    "/usr/share/icons/${icon_theme}/64x64/places/folder-code.svg"
-
-set_location_icon \
-    "${HOME}/Steam" \
-    "/usr/share/icons/${icon_theme}/64x64/places/folder-steam.svg"
+set_location_icon "${HOME}/git" "folder-git"
+set_location_icon "${HOME}/src" "folder-code"
+set_location_icon "${HOME}/Steam" "folder-steam"
 
 exit 0

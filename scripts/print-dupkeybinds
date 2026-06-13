@@ -17,7 +17,7 @@ SCHEMAS=(
 )
 
 if ! [ "$(command -v gsettings)" ]; then
-    printf '%s: %s\n' "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
+    printf "%s: %s\n" "${PROGNAME}" "gsettings cannot be found in the PATH!" >&2
     exit 1
 fi
 
@@ -36,7 +36,7 @@ for schema in "${SCHEMAS[@]}"; do
             && [ \
                 "${value}" \
                 != \
-                '@as []' \
+                "@as []" \
             ] \
         ; then
             # parses keybindings to loop over by mangling the following:
@@ -44,11 +44,11 @@ for schema in "${SCHEMAS[@]}"; do
             #   - ', '
             #   - ']
             for keybinding in $(\
-                printf '%s' "${value}" \
-                | sed 's/\['\''//; s/'\'', '\''/ /g; s/'\''\]//'\
+                printf "%s" "${value}" \
+                | sed "s/\['//; s/', '/ /g; s/'\]//" \
             ); do
                 printf \
-                    '%s %s %s\n' \
+                    "%s %s %s\n" \
                     "${schema}" \
                     "${key}" \
                     "['${keybinding}']" \

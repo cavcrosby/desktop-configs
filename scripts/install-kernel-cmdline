@@ -17,7 +17,7 @@ fi
 install --mode 644 "./src/cmdline" "/etc/kernel/cmdline"
 if [ -r "./src/cmdline.local" ]; then
     while read -r line && read -r local_line <&3; do
-        printf '%s %s\n' "${line}" "${local_line}" > "/etc/kernel/cmdline"
+        printf "%s %s\n" "${line}" "${local_line}" > "/etc/kernel/cmdline"
     done < "./src/cmdline" 3< "./src/cmdline.local"
 fi
 

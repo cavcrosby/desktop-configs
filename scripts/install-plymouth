@@ -32,7 +32,7 @@ install_plymouth_pkg() {
             "https://github.com/cavcrosby/plymouth/releases/download/debian/24.004.60-5.1.1/${pkg}_24.004.60-5.1.1_amd64.deb" \
     )"; then
         printf \
-            '%s: %s: %s\n' \
+            "%s: %s: %s\n" \
             "${PROGNAME}" \
             "couldn't fetch ${pkg} package" \
             "${res}" \
@@ -51,7 +51,7 @@ install_plymouth_pkg() {
 }
 
 if ! [ "$(command -v curl)" ]; then
-    printf '%s: %s\n' "${PROGNAME}" "curl cannot be found in the PATH!" >&2
+    printf "%s: %s\n" "${PROGNAME}" "curl cannot be found in the PATH!" >&2
     exit 1
 fi
 

@@ -9,7 +9,7 @@ PROGNAME="$(basename "$0")"
 readonly PROGNAME
 
 if ! [ "$(command -v pcre2grep)" ]; then
-    printf '%s: %s\n' "${PROGNAME}" "pcre2grep cannot be found in the PATH!" >&2
+    printf "%s: %s\n" "${PROGNAME}" "pcre2grep cannot be found in the PATH!" >&2
     exit 1
 fi
 
@@ -24,7 +24,7 @@ if [ -r "./src/gdm/greeter.dconf-defaults.local" ]; then
     temp_file_path="$(mktemp)"
     while read -r line; do
         if ! [ "${line}" ]; then
-            printf '%s\n' "${line}" >> "${temp_file_path}"
+            printf "%s\n" "${line}" >> "${temp_file_path}"
         elif [ "${line:0:1}" = "[" ]; then
             escaped_line="$(\
                 sed \
@@ -45,12 +45,12 @@ if [ -r "./src/gdm/greeter.dconf-defaults.local" ]; then
                 )"
             fi
 
-            printf '%s\n' "${line}" >> "${temp_file_path}"
+            printf "%s\n" "${line}" >> "${temp_file_path}"
         else
             if local_line="$(grep "${line/=*/=}" <<< "${schema_group}")"; then
-                printf '%s\n' "${local_line}" >> "${temp_file_path}"
+                printf "%s\n" "${local_line}" >> "${temp_file_path}"
             else
-                printf '%s\n' "${line}" >> "${temp_file_path}"
+                printf "%s\n" "${line}" >> "${temp_file_path}"
             fi
         fi
     done < "./src/gdm/greeter.dconf-defaults"

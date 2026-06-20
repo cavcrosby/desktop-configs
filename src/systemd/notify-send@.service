@@ -1,0 +1,7 @@
+[Unit]
+Description=Send desktop notification w/latest systemd(1) journal logs
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/libexec/systemd/notify-send "%i.service" "%Y"

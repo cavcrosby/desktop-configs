@@ -1,7 +1,7 @@
 [Unit]
 Description=Cron runner for rclone
 After=network-online.target
-OnFailure=sendmail@rclone-amazon-music.service
+OnFailure=notify-send@rclone-amazon-music.service
 
 [Service]
 Type=oneshot

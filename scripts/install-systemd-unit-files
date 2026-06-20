@@ -27,12 +27,6 @@ install \
 
 install \
     --mode 644 \
-    "./src/systemd/sendmail@.service" \
-    "${HOME}/.config/systemd/user"
-
-install --mode 755 "./src/systemd/sendmail" "${HOME}/.local/libexec/systemd"
-install \
-    --mode 644 \
     "./src/systemd/gnome-schema-sources.path" \
     "${HOME}/.config/systemd/user"
 
@@ -51,6 +45,25 @@ sudo install \
     "./src/systemd/configure-zswap.service" \
     "/etc/systemd/system"
 
+install \
+    --mode 644 \
+    "./src/systemd/shell-icon.svg" \
+    "./src/systemd/notify-send@.service" \
+    "${HOME}/.config/systemd/user"
+
+sudo install \
+    --mode 644 \
+    "./src/systemd/shell-icon.svg" \
+    "./src/systemd/notify-send-system@.service" \
+    "/etc/systemd/system"
+
+install --mode 755 "./src/systemd/notify-send" "${HOME}/.local/libexec/systemd"
+sudo install \
+    -D \
+    --mode 755 \
+    --target-directory "/usr/local/libexec/systemd" \
+    "./src/systemd/notify-send-system"
+
 systemctl daemon-reload --user
 systemctl enable --user "hourly@rclone-amazon-music.timer"
 systemctl start --user "hourly@rclone-amazon-music.timer"
@@ -66,5 +79,11 @@ systemctl start --user "gnome-schema-sources.path"
 
 sudo systemctl enable "configure-zswap.service"
 sudo systemctl start "configure-zswap.service"
+
+# run local variant of script
+if [ -r "${0}.local" ]; then
+    # shellcheck disable=SC2086 # word splitting should never occur here
+    ${0}.local
+fi
 
 exit 0

@@ -1,6 +1,0 @@
-[Unit]
-Description=Send email w/latest systemd(1) journal logs for a service
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/libexec/systemd/sendmail "%i.service"

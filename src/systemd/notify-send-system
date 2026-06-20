@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Sends a desktop notification with the latest system systemd(1) journal logs
+# for a service.
+
+set -eox pipefail
+
+service_name="$1"
+unit_dir_path="$2"
+non_root_user="$3"
+invocation_id="$(\
+    systemctl show \
+        --value \
+        --property "InvocationID" \
+        "${service_name}" \
+)"
+
+sudo \
+    --user "${non_root_user}" \
+    DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id --user "${non_root_user}")/bus" \
+    notify-send \
+        --app-name "${service_name}" \
+        --icon "${unit_dir_path}/shell-icon.svg" \
+        "--" \
+        "Command returned non-zero status code" \
+        "$(\
+            journalctl \
+                --unit "${service_name}" \
+                "_SYSTEMD_INVOCATION_ID=${invocation_id}" \
+        )"
+
+exit 0

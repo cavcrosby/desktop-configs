@@ -1,6 +1,7 @@
 [Unit]
 Description=Configure the zswap kernel module
 After=systemd-modules-load.service
+OnFailure=notify-send-system@configure-zswap.service
 
 [Service]
 Type=oneshot

@@ -1,5 +1,6 @@
 [Unit]
 Description=Update the GNOME compiled schemas
+OnFailure=notify-send@update-compiled-schemas.service
 
 [Service]
 Type=oneshot

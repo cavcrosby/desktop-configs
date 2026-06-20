@@ -11,3 +11,5 @@ node_modules/
 /src/gdm/greeter.dconf-defaults.local
 /src/apt/*.local
 /src/systemd/configure-zswap.service
+/src/systemd/notify-send-system@.service
+/scripts/install-systemd-unit-files.local

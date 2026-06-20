@@ -175,9 +175,11 @@ ${INSTALL_RESOLVED_CONF}:
 
 .PHONY: ${INSTALL_SYSTEMD_UNIT_FILES}
 ${INSTALL_SYSTEMD_UNIT_FILES}: local_config_files_vars = \
-								$${MAX_POOL_PERCENT}
+								$${MAX_POOL_PERCENT}\
+								$${LOGNAME}
 ${INSTALL_SYSTEMD_UNIT_FILES}: export MAX_POOL_PERCENT = $(shell ./scripts/calc-max-pool-percent)
 ${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/configure-zswap.service
+${INSTALL_SYSTEMD_UNIT_FILES}: ./src/systemd/notify-send-system@.service
 ${INSTALL_SYSTEMD_UNIT_FILES}:
 >	./scripts/install-systemd-unit-files
 
@@ -289,7 +291,8 @@ ${CLEAN}:
 		"./src/wallpapers.xml" \
 		"./src/preseed.cfg" \
 		"./src/cmdline" \
-		"./src/systemd/configure-zswap.service"
+		"./src/systemd/configure-zswap.service" \
+		"./src/systemd/notify-send-system@.service"
 
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"

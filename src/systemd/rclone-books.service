@@ -1,7 +1,7 @@
 [Unit]
 Description=Cron runner for rclone
 After=network-online.target
-OnFailure=sendmail@rclone-books.service
+OnFailure=notify-send@rclone-books.service
 
 [Service]
 Type=oneshot

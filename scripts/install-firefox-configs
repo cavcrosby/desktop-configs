@@ -67,7 +67,10 @@ if ! [ -r "${FIREFOX_POLICIES_FILE_PATH}" ]; then
 _EOF_
 elif ! [ "$(\
     yq \
-        '.["policies"]["Certificates"]["Install"][] | select(. == env(HTTP_PROXY_HOST) + ".pem")' \
+        '
+        .["policies"]["Certificates"]["Install"][]
+        | select(. == env(HTTP_PROXY_HOST) + ".pem")
+        ' \
         < "${FIREFOX_POLICIES_FILE_PATH}")" \
     ]; then
         temp_file_path="$(mktemp)"

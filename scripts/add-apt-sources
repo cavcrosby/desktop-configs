@@ -15,16 +15,23 @@ if [ "$(id --user)" != "${ROOT_UID}" ]; then
     exit 1
 fi
 
-install --mode 644 "./src/apt/docker.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/hashicorp.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/helm.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/vscodium.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/mozilla.sources" "/etc/apt/sources.list.d"
+install \
+    --mode 644 \
+    "./src/apt/docker.sources" \
+    "./src/apt/hashicorp.sources" \
+    "./src/apt/helm.sources" \
+    "./src/apt/vscodium.sources" \
+    "./src/apt/mozilla.sources" \
+    "./src/apt/kubectl.sources" \
+    "./src/apt/opentofu.sources" \
+    "/etc/apt/sources.list.d"
+
 install --mode 644 "./src/apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
-install --mode 644 "./src/apt/kubectl.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/opentofu.sources" "/etc/apt/sources.list.d"
-install --mode 644 "./src/apt/opentofu.gpg" "/etc/apt/keyrings"
-install --mode 644 "./src/apt/opentofu-repo.gpg" "/etc/apt/keyrings"
+install \
+    --mode 644 \
+    "./src/apt/opentofu.gpg" \
+    "./src/apt/opentofu-repo.gpg" \
+    "/etc/apt/keyrings"
 
 find \
     "./src/apt" \

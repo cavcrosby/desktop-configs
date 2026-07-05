@@ -4,60 +4,33 @@
 
 set -eo pipefail
 
-mkdir \
-    --parents \
-    "${HOME}/.config/systemd/user" \
-    "${HOME}/.local/libexec/systemd"
-
-install --mode 644 "./src/systemd/hourly@.timer" "${HOME}/.config/systemd/user"
 install \
+    -D \
     --mode 644 \
+    --target-directory "${HOME}/.config/systemd/user" \
+    "./src/systemd/hourly@.timer" \
     "./src/systemd/rclone-amazon-music.service" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/rclone-books.service" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/rclone-google-music.service" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/gnome-schema-sources.path" \
-    "${HOME}/.config/systemd/user"
-
-install \
-    --mode 644 \
     "./src/systemd/update-compiled-schemas.service" \
-    "${HOME}/.config/systemd/user"
+    "./src/systemd/shell-icon.svg" \
+    "./src/systemd/notify-send@.service"
 
 install \
+    -D \
     --mode 755 \
+    --target-directory "${HOME}/.local/libexec/systemd" \
     "./src/systemd/update-compiled-schemas" \
-    "${HOME}/.local/libexec/systemd"
+    "./src/systemd/notify-send"
 
 sudo install \
     --mode 644 \
     "./src/systemd/configure-zswap.service" \
-    "/etc/systemd/system"
-
-install \
-    --mode 644 \
-    "./src/systemd/shell-icon.svg" \
-    "./src/systemd/notify-send@.service" \
-    "${HOME}/.config/systemd/user"
-
-sudo install \
-    --mode 644 \
     "./src/systemd/shell-icon.svg" \
     "./src/systemd/notify-send-system@.service" \
     "/etc/systemd/system"
 
-install --mode 755 "./src/systemd/notify-send" "${HOME}/.local/libexec/systemd"
 sudo install \
     -D \
     --mode 755 \

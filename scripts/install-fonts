@@ -18,40 +18,15 @@ install \
 	-D \
 	--mode 644 \
 	--target-directory "/usr/share/fonts/opentype/fira" \
-	"./src/fonts/SIL_Open_Font_License.txt"
-
-install \
-	-D \
-	--mode 644 \
-	--target-directory "/usr/share/fonts/opentype/fira" \
-	"./src/fonts/FiraMono-Regular.otf"
-
-install \
-	-D \
-	--mode 644 \
-	--target-directory "/usr/share/fonts/opentype/fira" \
-	"./src/fonts/FiraSans-Book.otf"
-
-install \
-	-D \
-	--mode 644 \
-	--target-directory "/usr/share/fonts/opentype/fira" \
-	"./src/fonts/FiraSans-Regular.otf"
-
-install \
-	-D \
-	--mode 644 \
-	--target-directory "/usr/share/fonts/opentype/fira" \
+	"./src/fonts/SIL_Open_Font_License.txt" \
+	"./src/fonts/FiraMono-Regular.otf" \
+	"./src/fonts/FiraSans-Book.otf" \
+	"./src/fonts/FiraSans-Regular.otf" \
 	"./src/fonts/FiraSans-SemiBold.otf"
 
 install \
 	-D \
 	--mode 644 \
 	--target-directory "/usr/share/fonts/truetype/roboto-slab" \
-	"./src/fonts/Apache_License.txt"
-
-install \
-	-D \
-	--mode 644 \
-	--target-directory "/usr/share/fonts/truetype/roboto-slab" \
+	"./src/fonts/Apache_License.txt" \
 	"./src/fonts/RobotoSlab-Regular.ttf"

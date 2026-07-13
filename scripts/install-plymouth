@@ -34,7 +34,7 @@ install_plymouth_pkg() {
         printf \
             "%s: %s: %s\n" \
             "${PROGNAME}" \
-            "couldn't fetch ${pkg} package" \
+            "couldn't fetch the ${pkg} package" \
             "${res}" \
             >&2
 

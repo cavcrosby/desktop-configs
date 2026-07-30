@@ -4,6 +4,9 @@
 
 # recursively expanded variables
 SHELL = /usr/bin/sh
+TRUTHY_VALUES = \
+    true\
+    1
 
 # targets
 HELP = help
@@ -114,7 +117,11 @@ ${SYNC_GSETTINGS}:
 
 .PHONY: ${ADD_APT_SOURCES}
 ${ADD_APT_SOURCES}:
+ifneq ($(findstring ${INSTALL_HOMELAB_STAGING},${TRUTHY_VALUES}),)
+>	sudo ./scripts/add-apt-sources "true"
+else
 >	sudo ./scripts/add-apt-sources
+endif
 
 .PHONY: ${PRINT_DUPKEYBINDS}
 ${PRINT_DUPKEYBINDS}:

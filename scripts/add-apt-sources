@@ -9,30 +9,55 @@ set -eo pipefail
 PROGNAME="$(basename "$0")"
 readonly PROGNAME
 readonly ROOT_UID=0
+APT_SOURCES_PATHS=(
+    "./src/apt/01-docker.sources"
+    "./src/apt/01-hashicorp.sources"
+    "./src/apt/01-helm.sources"
+    "./src/apt/01-vscodium.sources"
+    "./src/apt/01-mozilla.sources"
+    "./src/apt/01-kubectl.sources"
+    "./src/apt/01-opentofu.sources"
+    "./src/apt/99-debian.sources"
+    "./src/apt/00-homelab-prod.sources"
+)
+
+APT_PREFERENCES_PATHS=(
+    "./src/apt/mozilla.pref"
+    "./src/apt/homelab-prod.pref"
+)
+
+install_homelab_staging="${1:-false}"
 
 if [ "$(id --user)" != "${ROOT_UID}" ]; then
     printf "%s: %s\n" "${PROGNAME}" "you must run this as root" >&2
     exit 1
 fi
 
+rm --force "/etc/apt/sources.list"
+if [ "${install_homelab_staging}" = "true" ]; then
+    APT_SOURCES_PATHS+=("./src/apt/00-homelab-staging.sources")
+    APT_PREFERENCES_PATHS+=("./src/apt/homelab-staging.pref")
+fi
+
 install \
     --mode 644 \
-    "./src/apt/docker.sources" \
-    "./src/apt/hashicorp.sources" \
-    "./src/apt/helm.sources" \
-    "./src/apt/vscodium.sources" \
-    "./src/apt/mozilla.sources" \
-    "./src/apt/kubectl.sources" \
-    "./src/apt/opentofu.sources" \
+    "${APT_SOURCES_PATHS[@]}" \
     "/etc/apt/sources.list.d"
 
-install --mode 644 "./src/apt/mozilla.pref" "/etc/apt/preferences.d/mozilla"
+find \
+    "${APT_PREFERENCES_PATHS[@]}" \
+    -exec sh -c '\
+        pref_file="${1#./src/apt/}";
+        install --mode 644 "$1" "/etc/apt/preferences.d/${pref_file%.pref}"
+    ' "$0" "{}" ";"
+
 install \
     --mode 644 \
     "./src/apt/opentofu.gpg" \
     "./src/apt/opentofu-repo.gpg" \
     "/etc/apt/keyrings"
 
+install --mode 644 "./src/apt/apt.conf" "/etc/apt/apt.conf.d/99homelab"
 find \
     "./src/apt" \
     -name "*.sources.local" \

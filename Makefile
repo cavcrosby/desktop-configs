@@ -32,7 +32,6 @@ SYNC_FIREFOX_PREFS = sync-firefox-prefs
 INSTALL_APPARMOR_MSMTP_RULES = install-apparmor-msmtp-rules
 INSTALL_WALLPAPERS = install-wallpapers
 INSTALL_FONTS = install-fonts
-INSTALL_PLYMOUTH = install-plymouth
 INSTALL_PLYMOUTH_THEMES = install-plymouth-themes
 LOAD_GNOME_TERMINAL_PROFILES = load-gnome-terminal-profiles
 INSTALL_NICE_TO_HAVES = install-nice-to-haves
@@ -224,10 +223,6 @@ ${INSTALL_WALLPAPERS}: ./src/wallpapers.xml
 .PHONY: ${INSTALL_FONTS}
 ${INSTALL_FONTS}:
 >	sudo ./scripts/install-fonts
-
-.PHONY: ${INSTALL_PLYMOUTH}
-${INSTALL_PLYMOUTH}:
->	./scripts/install-plymouth
 
 .PHONY: ${INSTALL_PLYMOUTH_THEMES}
 ${INSTALL_PLYMOUTH_THEMES}:

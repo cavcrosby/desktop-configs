@@ -15,7 +15,6 @@ APT_SOURCES_PATHS=(
     "./src/apt/01-helm.sources"
     "./src/apt/01-vscodium.sources"
     "./src/apt/01-mozilla.sources"
-    "./src/apt/01-kubectl.sources"
     "./src/apt/01-opentofu.sources"
     "./src/apt/99-debian.sources"
     "./src/apt/00-homelab-prod.sources"

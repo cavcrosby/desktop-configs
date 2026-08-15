@@ -1,6 +1,9 @@
 {
     "folders": [
         {
+            "path": "./apt-kubectl"
+        },
+        {
             "path": "./aptly-api"
         },
         {

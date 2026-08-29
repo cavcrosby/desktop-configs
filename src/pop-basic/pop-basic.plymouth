@@ -24,6 +24,7 @@ ProgressBarForegroundColor=0xffffff
 DialogClearsFirmwareBackground=true
 MessageBelowAnimation=true
 MessageBelowAnimationDistance=10
+PromptOverlaysMessage=true
 CursorAnimation=breath
 CursorAnimationSpeed=7
 

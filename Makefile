@@ -51,13 +51,15 @@ APPARMOR_PARSER = apparmor_parser
 DCONF = dconf
 APT_GET = apt-get
 FINDMNT = findmnt
+UPDATE_INITRAMFS = update-initramfs
 executables = \
 	${PYTHON}\
 	${NPM}\
 	${APPARMOR_PARSER}\
 	${DCONF}\
 	${APT_GET}\
-	${FINDMNT}
+	${FINDMNT}\
+	${UPDATE_INITRAMFS}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
@@ -228,6 +230,7 @@ ${INSTALL_FONTS}:
 ${INSTALL_PLYMOUTH_THEMES}:
 >	sudo cp \
 		--recursive \
+		--no-target-directory \
 		"./src/pop-basic" \
 		"/usr/share/plymouth/themes/pop-basic"
 
@@ -235,6 +238,8 @@ ${INSTALL_PLYMOUTH_THEMES}:
 		--mode 755 \
 		"./src/plymouth-desktop-configs" \
 		"/usr/share/initramfs-tools/hooks"
+
+> 	sudo ${UPDATE_INITRAMFS} -u -k "all"
 
 .PHONY: ${LOAD_GNOME_TERMINAL_PROFILES}
 ${LOAD_GNOME_TERMINAL_PROFILES}:

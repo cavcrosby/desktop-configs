@@ -32,6 +32,9 @@
             "path": "./plymouth"
         },
         {
+            "path": "./opencode"
+        },
+        {
             "path": "./shellcheck"
         },
         {

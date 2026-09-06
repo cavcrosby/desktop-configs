@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Adds APT data sources and preferences fragment files that are formatted
-# according to sources.list(5) and apt_preferences(5) respectively.
+# Adds APT data sources/sources.list(5) files and those related. These include
+# preferences fragment (apt_preferences(5)) and keyring files.
 
 set -eo pipefail
 

@@ -50,7 +50,6 @@ NPM = npm
 APPARMOR_PARSER = apparmor_parser
 DCONF = dconf
 APT_GET = apt-get
-FINDMNT = findmnt
 UPDATE_INITRAMFS = update-initramfs
 executables = \
 	${PYTHON}\
@@ -58,7 +57,6 @@ executables = \
 	${APPARMOR_PARSER}\
 	${DCONF}\
 	${APT_GET}\
-	${FINDMNT}\
 	${UPDATE_INITRAMFS}
 
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
@@ -276,7 +274,7 @@ ${SERVE_PRESEED_CONFIG}:
 .PHONY: ${INSTALL_KERNEL_CMDLINE}
 ${INSTALL_KERNEL_CMDLINE}: local_config_files_vars = \
 							$${ROOT_FILESYSTEM_UUID}
-${INSTALL_KERNEL_CMDLINE}: export ROOT_FILESYSTEM_UUID = $(shell ${FINDMNT} --noheadings --output "UUID" "/")
+${INSTALL_KERNEL_CMDLINE}: export ROOT_FILESYSTEM_UUID = $(shell findmnt --noheadings --output "UUID" "/")
 ${INSTALL_KERNEL_CMDLINE}: ./src/cmdline
 ${INSTALL_KERNEL_CMDLINE}:
 >	sudo ./scripts/install-kernel-cmdline

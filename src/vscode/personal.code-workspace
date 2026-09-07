@@ -35,6 +35,9 @@
             "path": "./opencode"
         },
         {
+            "path": "./opencode-rename-export"
+        },
+        {
             "path": "./shellcheck"
         },
         {

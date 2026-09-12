@@ -27,3 +27,14 @@ repos:
           - javascript
         additional_dependencies:
           - prettier@3.6.2
+
+  - repo: https://github.com/betterleaks/betterleaks.git
+    rev: v1.8.1
+    hooks:
+      - id: betterleaks
+
+  - repo: https://github.com/tombi-toml/tombi-pre-commit.git
+    rev: v1.5.4
+    hooks:
+      - id: tombi-lint
+      - id: tombi-format

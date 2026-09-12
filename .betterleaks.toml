@@ -1,0 +1,12 @@
+betterleaksMinVersion = "v1.8.1"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "d-i-question-type-password"
+confidence = "high"
+regex = '''[\w-]+ [\w-/]+ password (\S+)'''
+filter = '''
+filter.matchesAny(finding["secret"], [`\$([a-zA-Z_]\w*)|\$\{{1}(\w+)\}{1}`])
+'''

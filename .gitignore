@@ -1,14 +1,10 @@
 .python-version
+*.local
 node_modules/
-/src/gsettings.txt.local
 /src/bookmarks
 /src/wallpapers.xml
 /src/preseed.cfg
 /src/cmdline
-/src/cmdline.local
 /src/firefox/1m544c8z.default-release/user.js
-/src/gdm/greeter.dconf-defaults.local
-/src/apt/*.local
 /src/systemd/configure-zswap.service
 /src/systemd/notify-send-system@.service
-/scripts/install-systemd-unit-files.local

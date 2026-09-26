@@ -15,7 +15,7 @@ repos:
   - repo: https://github.com/pre-commit/mirrors-eslint.git
     rev: v9.37.0
     hooks:
-    -   id: eslint
+      - id: eslint
 
   - repo: local
     hooks:
@@ -23,7 +23,9 @@ repos:
         name: prettier
         entry: prettier --write
         language: node
-        types:
+        types_or:
+          - yaml
+          - json
           - javascript
         additional_dependencies:
           - prettier@3.6.2

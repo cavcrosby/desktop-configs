@@ -13,6 +13,9 @@
             "path": "./aws-cm"
         },
         {
+            "path": "./deb"
+        },
+        {
             "path": "./desktop-configs"
         },
         {
@@ -46,9 +49,6 @@
         {
             "path": "./vscode-settings"
         },
-        {
-            "path": "./yq"
-        }
     ],
     "settings": {
         "files.associations": {

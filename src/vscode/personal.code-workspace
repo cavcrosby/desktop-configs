@@ -13,6 +13,9 @@
             "path": "./aws-cm"
         },
         {
+            "path": "./cs61a"
+        },
+        {
             "path": "./deb"
         },
         {
@@ -39,6 +42,9 @@
         },
         {
             "path": "./opencode-rename-export"
+        },
+        {
+            "path": "./ostep"
         },
         {
             "path": "./shellcheck"

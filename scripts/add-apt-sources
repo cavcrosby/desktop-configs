@@ -32,6 +32,11 @@ if [ "$(id --user)" != "${ROOT_UID}" ]; then
     exit 1
 fi
 
+if ! [ "$(command -v apt-get)" ]; then
+    printf "%s: %s\n" "${PROGNAME}" "apt-get cannot be found in the PATH!" >&2
+    exit 1
+fi
+
 rm --force "/etc/apt/sources.list"
 if [ "${install_homelab_staging}" = "true" ]; then
     APT_SOURCES_PATHS+=("./src/apt/00-homelab-staging.sources")

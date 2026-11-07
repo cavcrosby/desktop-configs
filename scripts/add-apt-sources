@@ -9,7 +9,8 @@ set -eo pipefail
 PROGNAME="$(basename "$0")"
 readonly PROGNAME
 readonly ROOT_UID=0
-APT_SOURCES_PATHS=(
+
+apt_sources_paths=(
     "./src/apt/01-docker.sources"
     "./src/apt/01-hashicorp.sources"
     "./src/apt/01-helm.sources"
@@ -20,7 +21,7 @@ APT_SOURCES_PATHS=(
     "./src/apt/00-homelab-prod.sources"
 )
 
-APT_PREFERENCES_PATHS=(
+apt_preferences_paths=(
     "./src/apt/mozilla.pref"
     "./src/apt/homelab-prod.pref"
 )
@@ -39,17 +40,17 @@ fi
 
 rm --force "/etc/apt/sources.list"
 if [ "${install_homelab_staging}" = "true" ]; then
-    APT_SOURCES_PATHS+=("./src/apt/00-homelab-staging.sources")
-    APT_PREFERENCES_PATHS+=("./src/apt/homelab-staging.pref")
+    apt_sources_paths+=("./src/apt/00-homelab-staging.sources")
+    apt_preferences_paths+=("./src/apt/homelab-staging.pref")
 fi
 
 install \
     --mode 644 \
-    "${APT_SOURCES_PATHS[@]}" \
+    "${apt_sources_paths[@]}" \
     "/etc/apt/sources.list.d"
 
 find \
-    "${APT_PREFERENCES_PATHS[@]}" \
+    "${apt_preferences_paths[@]}" \
     -exec sh -c '\
         pref_file="${1#./src/apt/}";
         install --mode 644 "$1" "/etc/apt/preferences.d/${pref_file%.pref}"

@@ -39,6 +39,7 @@ SERVE_PRESEED_CONFIG = serve-preseed-config
 INSTALL_KERNEL_CMDLINE = install-kernel-cmdline
 INSTALL_NVIDIA_OPTIONS_CONF = install-nvidia-options-conf
 PRINT_ZSWAP_USAGE = print-zswap-usage
+INSTALL_EN_US_24_LOCALE = install-en-us-24-locale
 CLEAN = clean
 
 # executables
@@ -97,6 +98,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL_KERNEL_CMDLINE}             - install the kernel boot arguments configuration file'
 >	@printf '%s\n' '  ${INSTALL_NVIDIA_OPTIONS_CONF}        - install the NVIDIA modprobe options configuration file'
 >	@printf '%s\n' '  ${PRINT_ZSWAP_USAGE}                  - prints metrics about zswap kernel module'\''s runtime'
+>	@printf '%s\n' '  ${INSTALL_EN_US_24_LOCALE}            - install the custom en_US 24-hour locale'
 >	@printf '%s\n' '  ${CLEAN}                              - remove files generated from targets'
 
 .PHONY: ${SETUP}
@@ -286,6 +288,20 @@ ${INSTALL_NVIDIA_OPTIONS_CONF}:
 .PHONY: ${PRINT_ZSWAP_USAGE}
 ${PRINT_ZSWAP_USAGE}:
 >	./scripts/print-zswap-usage
+
+.PHONY: ${INSTALL_EN_US_24_LOCALE}
+${INSTALL_EN_US_24_LOCALE}:
+>	sudo mkdir --parents "/usr/local/lib/locale"
+>	sudo localedef \
+		--quiet \
+		--no-archive \
+		--inputfile \
+		"./src/en_US@24" \
+		--charmap "UTF-8" \
+		"/usr/local/lib/locale/en_US@24"
+
+> 	sudo update-locale LANG="en_US.UTF-8@24"
+> 	sudo cp "./src/locpath.sh" "/etc/profile.d"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:
